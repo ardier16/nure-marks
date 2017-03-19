@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NUREMarks.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace NUREMarks
 {
@@ -28,6 +26,8 @@ namespace NUREMarks
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<MarksContext>(options => options.UseSqlServer(connection));
             services.AddMvc();
         }
 
