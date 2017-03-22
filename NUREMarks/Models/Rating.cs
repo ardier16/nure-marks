@@ -3,8 +3,10 @@
     public class Rating
     {
         public int Id { get; set; }
-        public int Value { get; set; }
+        public double Value { get; set; }
         public int SubjectsCount { get; set; }
+        public string Note { get; set; }
+        public double Bonus { get; set; }
 
         public int StudentId { get; set; }
         public Student Student { get; set; }
