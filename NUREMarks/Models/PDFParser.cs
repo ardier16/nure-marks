@@ -59,20 +59,27 @@ namespace NUREMarks.Models
         private List<string> FormatParsedText(List<string> parsedText)
         {
             string[] temp;
-            testGroup.Course =  Int32.Parse(parsedText[3].Split(' ')[1]);
+
+            parsedText.RemoveAll(p => p.Length < 5);
+
+            if (parsedText[0].Contains("Рейтинг"))
+                parsedText.Insert(0, "Факультет   ");
+
+
+
+            testGroup.Course =  Int32.Parse(parsedText[2].Split(' ')[1]);
             testGroup.FacultyFull = parsedText[0].Substring(10, parsedText[0].Length - 12);
-            testGroup.Department = parsedText[6].Substring(1, parsedText[6].Length - 4);
+            testGroup.Department = parsedText[5].Substring(1, parsedText[5].Length - 4);
             testGroup.FacultyShort = GetFacultyAcronym(testGroup.FacultyFull);
 
-            parsedText.RemoveRange(0, 12);
-            parsedText.RemoveAt(parsedText.Count - 1);
+            parsedText.RemoveRange(0, 10);
+            
 
             for (int i = 0; i < parsedText.Count; i++)
             {
-
                 int index = CheckInfo(parsedText[i]);
 
-                if (index > 0)
+                if (index > 2)
                 {
                     temp = parsedText[i].Split(' ');
                     Array.Copy(temp, index, temp, 0, temp.Length - index);
@@ -80,7 +87,7 @@ namespace NUREMarks.Models
                     parsedText.Insert(i + 1, String.Join(" ", temp.Select(p => p.ToString()).ToArray()));
 
                     temp = parsedText[i].Split(' ');
-                    Array.Resize(ref temp, temp.Length - index - 1);
+                    Array.Resize(ref temp, index);
                     parsedText[i] = String.Join(" ", temp.Select(p => p.ToString()).ToArray()) + " \r";
                 }
                 else if (index == 0)
@@ -89,7 +96,22 @@ namespace NUREMarks.Models
                     parsedText[i - 1] += " академ. відпустка \r";
                     parsedText.RemoveRange(i, 2);
                 }
+                else if (index == 1)
+                {
+                    List<string> arr = parsedText[i].Split(' ').ToList();
+                    arr.Remove(arr.Last());
+
+                    arr.Insert(arr.Count, parsedText[i+1].Substring(0, parsedText[i+1].Length));
+                    parsedText[i] = String.Join(" ", arr.Select(p => p.ToString()).ToArray());
+                    parsedText.RemoveRange(i+1, 1);
+                }
+                else if (index == 2)
+                {
+                    parsedText[i] = parsedText[i - 1].Replace("\r", " ") + parsedText[i];
+                    parsedText.RemoveAt(i-- - 1);
+                }
             }
+            parsedText.RemoveAll(p => p.Length < 5);
 
             return parsedText;
         }
@@ -98,7 +120,7 @@ namespace NUREMarks.Models
         {
             string[] temp = s.Split(' ');
 
-            if (temp.Length > 12)
+            if (temp.Length > 15)
             {
                 for (int i = 0; i < temp.Length; i++)
                 {
@@ -116,9 +138,14 @@ namespace NUREMarks.Models
                 }
             }
 
-            if (temp.Length < 5)
+            if (temp.Length < 5 && temp.ToList().IndexOf("академ.") != -1)
                 return 0;
 
+            if (temp[0] == "не")
+                return 2;
+
+            if (temp.Length < 8)
+                return 1;    
 
             return -1;
         }
@@ -128,28 +155,29 @@ namespace NUREMarks.Models
             string name, group, info;
             double rating;
             int index;
-            string[] dataStudent;
+            List<string> dataStudent;
 
             for (int i = 0; i < dataStudents.Count; i++)
             {
-                dataStudent = dataStudents[i].Split(' ');
-                index = dataStudent.ToList().IndexOf("");
+                dataStudent = dataStudents[i].Split(' ').ToList();
+                index = dataStudent.IndexOf("") == -1 ? 3 : dataStudent.IndexOf("");
 
-                name = String.Join(" ", dataStudent.Where(p => Array.IndexOf(dataStudent, p) < index).
+                dataStudent.RemoveAll(p => p == "");
+
+                name = String.Join(" ", dataStudent.Where(p => Array.IndexOf(dataStudent.ToArray(), p) < index).
                     Select(p => p.ToString()).ToArray());
 
-                if (name.Split(' ').Length < 3)
-                    index += 3 - name.Split(' ').Length;
 
-                if (dataStudent[++index] == "не")
+                if (dataStudent[index] == "не")
                 {
                     rating = 0;
                     index++;
                 }
                 else
-                    rating = Double.Parse(dataStudent[index].Replace('.', ','));
+                   rating = Double.Parse(dataStudent[index].Replace('.', ','));
 
-                group = dataStudent[index += 2];
+
+                group = dataStudent[++index];
 
                 if (Groups.Select(g => g.Name).ToList().IndexOf(group) == -1)
                     Groups.Add(new Group
@@ -162,8 +190,8 @@ namespace NUREMarks.Models
                         FacultyShort = testGroup.FacultyShort
                     });
 
-                info = String.Join(" ", dataStudent.Where(p => (Array.IndexOf(dataStudent, p) > index &&
-                    Array.IndexOf(dataStudent, p) < dataStudent.Length - 1)).
+                info = String.Join(" ", dataStudent.Where(p => (Array.IndexOf(dataStudent.ToArray(), p) > index &&
+                    Array.IndexOf(dataStudent.ToArray(), p) < dataStudent.Count - 1)).
                     Select(p => p.ToString()).ToArray());
 
                 Students.Add(new StudentData(name, rating, group, info));

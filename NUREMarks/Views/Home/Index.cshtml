@@ -21,5 +21,11 @@
             <td>@(p.Rating == 0 ? "не розраховується" : p.Rating.ToString())</td>
             <td>@p.Info</td>
         </tr>
+
+        @if (i > 2000)
+        {
+            break;
+        }
+
     }
 </table>

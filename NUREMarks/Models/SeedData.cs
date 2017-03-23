@@ -26,48 +26,52 @@ namespace NUREMarks.Models
                 context.Semesters.AddRange(sem1, sem2);
                 context.SaveChanges();
 
+                string[] dirs = Directory.GetDirectories("wwwroot\\pdf");
 
-                string[] paths = Directory.GetFiles("PDF");
-
-                for (int i = 0; i < paths.Length; i++)
+                for (int k = 0; k < dirs.Length; k++)
                 {
-                    PDFParser parser = new PDFParser(paths[i]);
+                    string[] paths = Directory.GetFiles(dirs[k]);
 
-                    List<Group> listg = parser.Groups;
-
-                    List<StudentData> list = parser.Students;
-
-                    context.Groups.AddRange(listg);
-                    context.SaveChanges();
-
-                    for (int j = 0; j < list.Count; j++)
+                    for (int i = 0; i < paths.Length; i++)
                     {
-                        Student s = new Student
-                        {
-                            EMail = EmailGenerator.GenerateNureEmail(list[j].Name),
-                            Password = "123456",
-                            Name = list[j].Name,
-                            Group = context.Groups.First(p => p.Name == list[j].Group),
-                            IsBudgetary = list[j].Info == "" ? false : true
-                        };
+                        PDFParser parser = new PDFParser(paths[i]);
 
-                        context.Students.Add(s);
+                        List<Group> listg = parser.Groups;
+
+                        List<StudentData> list = parser.Students;
+
+                        context.Groups.AddRange(listg);
                         context.SaveChanges();
 
-                        Rating r = new Rating
+                        for (int j = 0; j < list.Count; j++)
                         {
-                            Student = s,
-                            Semester = sem1,
-                            Value = list[j].Rating,
-                            Bonus = 0,
-                            Note = list[j].Info
-                        };
+                            Student s = new Student
+                            {
+                                EMail = EmailGenerator.GenerateNureEmail(list[j].Name),
+                                Password = "123456",
+                                Name = list[j].Name,
+                                Group = context.Groups.First(p => p.Name == list[j].Group),
+                                IsBudgetary = list[j].Info == "контракт" ? false : true
+                            };
 
-                        context.Ratings.Add(r);
+                            context.Students.Add(s);
+                            context.SaveChanges();
 
+                            Rating r = new Rating
+                            {
+                                Student = s,
+                                Semester = sem1,
+                                Value = list[j].Rating,
+                                Bonus = 0,
+                                Note = list[j].Info
+                            };
+
+                            context.Ratings.Add(r);
+
+                        }
+
+                        context.SaveChanges();
                     }
-
-                    context.SaveChanges();
                 }
             }
         }

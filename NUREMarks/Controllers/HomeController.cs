@@ -20,7 +20,7 @@ namespace NUREMarks.Controllers
                 s => s.Id, (r, s) => new StudentData(s.Name,
                     r.Value,
                     db.Groups.Where(i => i.Id == s.GroupId).Select(i => i.Name).Single(),
-                    r.Note)));
+                    r.Note)).Where(p => p.Group.Contains("ПІ-15")));
         }
 
         public IActionResult Contact()
