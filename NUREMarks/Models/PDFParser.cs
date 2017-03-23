@@ -10,12 +10,12 @@ namespace NUREMarks.Models
 {
     public struct StudentData
     {
-        public String Name;
-        public String Group;
-        public String Rating;
-        public String Info;
+        public string Name;
+        public string Group;
+        public double Rating;
+        public string Info;
 
-        public StudentData(String Name, String Rating, String Group, String Info)
+        public StudentData(string Name, double Rating, string Group, string Info)
         {
             this.Name = Name;
             this.Group = Group;
@@ -125,7 +125,8 @@ namespace NUREMarks.Models
 
         private void FillStudentList(List<string> dataStudents)
         {
-            string name, group, rating, info;
+            string name, group, info;
+            double rating;
             int index;
             string[] dataStudent;
 
@@ -142,11 +143,11 @@ namespace NUREMarks.Models
 
                 if (dataStudent[++index] == "не")
                 {
-                    rating = "0";
+                    rating = 0;
                     index++;
                 }
                 else
-                    rating = dataStudent[index];
+                    rating = Double.Parse(dataStudent[index].Replace('.', ','));
 
                 group = dataStudent[index += 2];
 
@@ -167,6 +168,7 @@ namespace NUREMarks.Models
 
                 Students.Add(new StudentData(name, rating, group, info));
             }
+            
         }
 
         private string ConvertPath(string path)
@@ -176,7 +178,7 @@ namespace NUREMarks.Models
 
             if (result.IndexOfAny(new char[] { '0', '1', '2', '3', '4',
                 '5', '6', '7', '8', '9' }) != -1)
-                result.Substring(0, result.Length - 2);
+                result = result.Substring(0, result.Length - 1);
 
             return result;
         }

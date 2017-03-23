@@ -33,7 +33,7 @@ namespace NUREMarks.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Month = table.Column<string>(nullable: true),
+                    Season = table.Column<string>(nullable: true),
                     Year = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -63,7 +63,6 @@ namespace NUREMarks.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EMail = table.Column<string>(nullable: true),
-                    FullName = table.Column<string>(nullable: true),
                     GroupId = table.Column<int>(nullable: false),
                     IsBudgetary = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
@@ -113,7 +112,6 @@ namespace NUREMarks.Migrations
                     Note = table.Column<string>(nullable: true),
                     SemesterId = table.Column<int>(nullable: false),
                     StudentId = table.Column<int>(nullable: false),
-                    SubjectsCount = table.Column<int>(nullable: false),
                     Value = table.Column<double>(nullable: false)
                 },
                 constraints: table =>

@@ -3,14 +3,14 @@
     ViewData["Title"] = "Список студентов";
     int i = 1;
 }
-<h3>Смартфоны</h3>
+<h3>Студенти</h3>
 <table class="table-condensed">
     <tr>
         <td>№</td>
-        <td>Имя</td>
-        <td>Группа</td>
+        <td>ПІБ</td>
+        <td>Група</td>
         <td>Рейтинг</td>
-        <td>Комментарий</td>
+        <td>Додаткова інформація</td>
     </tr>
     @foreach (NUREMarks.Models.StudentData p in Model)
     {
@@ -18,7 +18,7 @@
             <td>@(i++)</td>
             <td>@p.Name</td>
             <td>@p.Group</td>
-            <td>@(p.Rating == "0" ? "Не расчитывается" : p.Rating)</td>
+            <td>@(p.Rating == 0 ? "не розраховується" : p.Rating.ToString())</td>
             <td>@p.Info</td>
         </tr>
     }

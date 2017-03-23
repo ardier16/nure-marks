@@ -75,8 +75,6 @@ namespace NUREMarks.Migrations
 
                     b.Property<int>("StudentId");
 
-                    b.Property<int>("SubjectsCount");
-
                     b.Property<double>("Value");
 
                     b.HasKey("Id");
@@ -93,7 +91,7 @@ namespace NUREMarks.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Month");
+                    b.Property<string>("Season");
 
                     b.Property<int>("Year");
 
@@ -108,8 +106,6 @@ namespace NUREMarks.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("EMail");
-
-                    b.Property<string>("FullName");
 
                     b.Property<int>("GroupId");
 

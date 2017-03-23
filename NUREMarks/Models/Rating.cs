@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public double Value { get; set; }
-        public int SubjectsCount { get; set; }
         public string Note { get; set; }
         public double Bonus { get; set; }
 

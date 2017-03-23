@@ -15,18 +15,12 @@ namespace NUREMarks.Controllers
             db = context;
         }
         public IActionResult Index()
-        {
-            return View();
-
-
-            /*
+        {           
              return View(db.Ratings.Join(db.Students, r => r.StudentId,
-                s => s.Id, (r, s) => new StudentData(s.FullName,
-                    r.Value.ToString(),
+                s => s.Id, (r, s) => new StudentData(s.Name,
+                    r.Value,
                     db.Groups.Where(i => i.Id == s.GroupId).Select(i => i.Name).Single(),
                     r.Note)));
-             */
-
         }
 
         public IActionResult Contact()
