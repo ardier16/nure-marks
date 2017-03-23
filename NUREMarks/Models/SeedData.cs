@@ -8,13 +8,54 @@ namespace NUREMarks.Models
 {
     public static class SeedData
     {
+       public static void FillDbFromPDF(MarksContext context)
+        {
+            if (!context.Students.Any())
+            {
+                string[] paths = Directory.GetFiles("PDF");
+
+                for (int i = 0; i < paths.Length; i++)
+                {
+                    PDFParser parser = new PDFParser(paths[i]);
+
+                    List<Group> listg = parser.Groups;
+
+                    List<StudentData> list = parser.Students;
+
+                    context.Groups.AddRange(listg);
+                    context.SaveChanges();
+
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        Student s = new Student
+                        {
+                            EMail = EmailGenerator.GenerateNureEmail(list[j].Name),
+                            Password = "123456",
+                            Name = list[j].Name.Split(' ')[1],
+                            FullName = list[j].Name,
+                            Group = context.Groups.First(p => p.Name == list[j].Group),
+                            IsBudgetary = list[j].Info == "" ? false : true
+                        };
+
+                        context.Add(s);
+                    }
+
+                    context.SaveChanges();
+                }
+            }
+        }
+
+
         public static void Initialize(IServiceProvider servicePorvider)
         {
             var context = servicePorvider.GetService<MarksContext>();
 
-            
-            
-              Group g1 = new Group
+            FillDbFromPDF(context);
+
+
+            /*
+             * 
+             * Group g1 = new Group
                 {
                     Name = "ПИ-15-1",
                     Course = 2,
@@ -186,7 +227,7 @@ namespace NUREMarks.Models
                 };
 
                 context.Ratings.AddRange(r1, r2, r3, r4, r5, r6);
-             
+             */
         }
     }
 }
