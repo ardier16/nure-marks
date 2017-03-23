@@ -23,6 +23,8 @@ namespace NUREMarks.Migrations
 
                     b.Property<int>("Course");
 
+                    b.Property<string>("DepShort");
+
                     b.Property<string>("Department");
 
                     b.Property<string>("FacultyFull");

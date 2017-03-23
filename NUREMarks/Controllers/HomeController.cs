@@ -16,14 +16,16 @@ namespace NUREMarks.Controllers
         }
         public IActionResult Index()
         {
-            return View(db.Ratings.Join(db.Students, r => r.StudentId,
-                s => s.Id, (r, s) => new
-                {
-                    Name = s.FullName,
-                    Group = db.Groups.Where(i => i.Id == s.GroupId).Select(i => i.Name),
-                    Rating = r.Value,
-                    Note = r.Note
-                }).ToList());
+            return View();
+
+
+            /*
+             return View(db.Ratings.Join(db.Students, r => r.StudentId,
+                s => s.Id, (r, s) => new StudentData(s.FullName,
+                    r.Value.ToString(),
+                    db.Groups.Where(i => i.Id == s.GroupId).Select(i => i.Name).Single(),
+                    r.Note)));
+             */
 
         }
 

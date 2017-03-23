@@ -1,22 +1,25 @@
 ﻿
 @{
     ViewData["Title"] = "Список студентов";
+    int i = 1;
 }
 <h3>Смартфоны</h3>
 <table class="table-condensed">
     <tr>
+        <td>№</td>
         <td>Имя</td>
         <td>Группа</td>
         <td>Рейтинг</td>
         <td>Комментарий</td>
     </tr>
-    @foreach (object p in Model)
+    @foreach (NUREMarks.Models.StudentData p in Model)
     {
         <tr>
+            <td>@(i++)</td>
             <td>@p.Name</td>
             <td>@p.Group</td>
-            <td>@p.Rating</td>
-            <td>@p.Note</td>
+            <td>@(p.Rating == "0" ? "Не расчитывается" : p.Rating)</td>
+            <td>@p.Info</td>
         </tr>
     }
 </table>

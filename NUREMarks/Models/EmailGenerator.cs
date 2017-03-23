@@ -38,7 +38,8 @@ namespace NUREMarks.Models
             { 'щ', "shch" },
             { 'ь', "" },
             { 'ю', "iu" },
-            { 'я', "ia" }
+            { 'я', "ia" },
+            { '`', "ia" }
         };
 
 

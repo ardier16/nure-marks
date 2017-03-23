@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace NUREMarks.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Marks : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,6 +16,7 @@ namespace NUREMarks.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Course = table.Column<int>(nullable: false),
+                    DepShort = table.Column<string>(nullable: true),
                     Department = table.Column<string>(nullable: true),
                     FacultyFull = table.Column<string>(nullable: true),
                     FacultyShort = table.Column<string>(nullable: true),
@@ -62,7 +63,9 @@ namespace NUREMarks.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EMail = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
                     GroupId = table.Column<int>(nullable: false),
+                    IsBudgetary = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true)
                 },
@@ -106,10 +109,12 @@ namespace NUREMarks.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Bonus = table.Column<double>(nullable: false),
+                    Note = table.Column<string>(nullable: true),
                     SemesterId = table.Column<int>(nullable: false),
                     StudentId = table.Column<int>(nullable: false),
                     SubjectsCount = table.Column<int>(nullable: false),
-                    Value = table.Column<int>(nullable: false)
+                    Value = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

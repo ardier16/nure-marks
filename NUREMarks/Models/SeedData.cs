@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+using System.IO;
 
 namespace NUREMarks.Models
 {
@@ -10,9 +12,9 @@ namespace NUREMarks.Models
         {
             var context = servicePorvider.GetService<MarksContext>();
 
-            if (!context.Groups.Any())
-            {
-                Group g1 = new Group
+            
+            
+              Group g1 = new Group
                 {
                     Name = "ПИ-15-1",
                     Course = 2,
@@ -184,8 +186,7 @@ namespace NUREMarks.Models
                 };
 
                 context.Ratings.AddRange(r1, r2, r3, r4, r5, r6);
-                context.SaveChanges();
-            }
+             
         }
     }
 }
