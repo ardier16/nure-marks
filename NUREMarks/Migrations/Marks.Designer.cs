@@ -8,8 +8,8 @@ using NUREMarks.Models;
 namespace NUREMarks.Migrations
 {
     [DbContext(typeof(MarksContext))]
-    [Migration("20170319122954_Initial")]
-    partial class Initial
+    [Migration("20170323110725_Marks")]
+    partial class Marks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,8 @@ namespace NUREMarks.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("Course");
+
+                    b.Property<string>("DepShort");
 
                     b.Property<string>("Department");
 
@@ -66,13 +68,15 @@ namespace NUREMarks.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<double>("Bonus");
+
+                    b.Property<string>("Note");
+
                     b.Property<int>("SemesterId");
 
                     b.Property<int>("StudentId");
 
-                    b.Property<int>("SubjectsCount");
-
-                    b.Property<int>("Value");
+                    b.Property<double>("Value");
 
                     b.HasKey("Id");
 
@@ -88,7 +92,7 @@ namespace NUREMarks.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Month");
+                    b.Property<string>("Season");
 
                     b.Property<int>("Year");
 
@@ -105,6 +109,8 @@ namespace NUREMarks.Migrations
                     b.Property<string>("EMail");
 
                     b.Property<int>("GroupId");
+
+                    b.Property<bool>("IsBudgetary");
 
                     b.Property<string>("Name");
 

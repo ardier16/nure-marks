@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NUREMarks.Models;
 
 namespace NUREMarks.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        MarksContext db;
+        public HomeController(MarksContext context)
         {
-            return View();
+            db = context;
         }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+        public IActionResult Index()
+        {           
+             return View(db.Ratings.Join(db.Students, r => r.StudentId,
+                s => s.Id, (r, s) => new StudentData(s.Name,
+                    r.Value,
+                    db.Groups.Where(i => i.Id == s.GroupId).Select(i => i.Name).Single(),
+                    r.Note)).Where(p => p.Group.Contains("ПІ-15")));
         }
 
         public IActionResult Contact()

@@ -8,5 +8,6 @@
         public string FacultyShort { get; set; }
         public string FacultyFull { get; set; }
         public int Course { get; set; }
+        public string DepShort { get; set; }
     }
 }
