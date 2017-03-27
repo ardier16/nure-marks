@@ -37,7 +37,6 @@ namespace NUREMarks.Models
                         PDFParser parser = new PDFParser(paths[i]);
 
                         List<Group> listg = parser.Groups;
-
                         List<StudentData> list = parser.Students;
 
                         context.Groups.AddRange(listg);
@@ -67,9 +66,7 @@ namespace NUREMarks.Models
                             };
 
                             context.Ratings.Add(r);
-
                         }
-
                         context.SaveChanges();
                     }
                 }
@@ -82,57 +79,6 @@ namespace NUREMarks.Models
             var context = servicePorvider.GetService<MarksContext>();
 
             FillDbFromPDF(context);
-
-
-            /*
-            
-
-               
-
-                
-                Rating r2 = new Rating
-                {
-                    Student = st2,
-                    Semester = sem1,
-                    Value = 88.714,
-                    Bonus = 0,
-                    SubjectsCount = 6
-                };
-                Rating r3 = new Rating
-                {
-                    Student = st3,
-                    Semester = sem1,
-                    Value = 0,
-                    Bonus = 0,
-                    SubjectsCount = 6
-                };
-                Rating r4 = new Rating
-                {
-                    Student = st4,
-                    Semester = sem1,
-                    Value = 84.714,
-                    Bonus = 0,
-                    SubjectsCount = 6
-                };
-                Rating r5 = new Rating
-                {
-                    Student = st5,
-                    Semester = sem1,
-                    Value = 0,
-                    Bonus = 0,
-                    SubjectsCount = 6
-                };
-                Rating r6 = new Rating
-                {
-                    Student = st6,
-                    Semester = sem1,
-                    Value = 91.857,
-                    Bonus = 0,
-                    SubjectsCount = 6
-                };
-
-                context.Ratings.AddRange(r1, r2, r3, r4, r5, r6);
-             */
         }
     }
 }

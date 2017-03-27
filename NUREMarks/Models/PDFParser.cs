@@ -8,21 +8,6 @@ using System.IO;
 
 namespace NUREMarks.Models
 {
-    public struct StudentData
-    {
-        public string Name;
-        public string Group;
-        public double Rating;
-        public string Info;
-
-        public StudentData(string Name, double Rating, string Group, string Info)
-        {
-            this.Name = Name;
-            this.Group = Group;
-            this.Rating = Rating;
-            this.Info = Info;
-        }
-    }
 
     public class PDFParser
     {
@@ -58,6 +43,11 @@ namespace NUREMarks.Models
 
         private List<string> FormatParsedText(List<string> parsedText)
         {
+            for (int i = 0; i < parsedText.Count; i++)
+            {
+                parsedText[i].Replace('`', '\'');
+            }
+
             string[] temp;
 
             parsedText.RemoveAll(p => p.Length < 5);
@@ -66,8 +56,12 @@ namespace NUREMarks.Models
                 parsedText.Insert(0, "Факультет   ");
 
 
-
             testGroup.Course =  Int32.Parse(parsedText[2].Split(' ')[1]);
+
+            if (parsedText[3].Contains("другого рівня"))
+                testGroup.Course += 4;
+
+
             testGroup.FacultyFull = parsedText[0].Substring(10, parsedText[0].Length - 12);
             testGroup.Department = parsedText[5].Substring(1, parsedText[5].Length - 4);
             testGroup.FacultyShort = GetFacultyAcronym(testGroup.FacultyFull);
@@ -165,8 +159,15 @@ namespace NUREMarks.Models
                 dataStudent.RemoveAll(p => p == "");
 
                 name = String.Join(" ", dataStudent.Where(p => Array.IndexOf(dataStudent.ToArray(), p) < index).
-                    Select(p => p.ToString()).ToArray());
+                    Select(p => p.ToString()).ToArray()).Replace("`", "'");
 
+                int apos = name.IndexOf('\'');
+
+                if (apos != -1)
+                {
+                    name = name.Insert(apos + 1, name[apos + 1].ToString().ToLower());
+                    name = name.Remove(apos + 2, 1);
+                }
 
                 if (dataStudent[index] == "не")
                 {
@@ -178,6 +179,9 @@ namespace NUREMarks.Models
 
 
                 group = dataStudent[++index];
+
+                if (testGroup.DepShort.Contains("РТу"))
+                    group = group.Insert(2, "у");
 
                 if (Groups.Select(g => g.Name).ToList().IndexOf(group) == -1)
                     Groups.Add(new Group
@@ -194,7 +198,13 @@ namespace NUREMarks.Models
                     Array.IndexOf(dataStudent.ToArray(), p) < dataStudent.Count - 1)).
                     Select(p => p.ToString()).ToArray());
 
-                Students.Add(new StudentData(name, rating, group, info));
+                Students.Add(new StudentData
+                {
+                    Name = name,
+                    Group = group,
+                    Rating = rating,
+                    Info = info
+                });
             }
             
         }

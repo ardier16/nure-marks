@@ -9,24 +9,19 @@ namespace NUREMarks.Controllers
 {
     public class HomeController : Controller
     {
-        MarksContext db;
-        public HomeController(MarksContext context)
-        {
-            db = context;
-        }
         public IActionResult Index()
-        {           
-             return View(db.Ratings.Join(db.Students, r => r.StudentId,
-                s => s.Id, (r, s) => new StudentData(s.Name,
-                    r.Value,
-                    db.Groups.Where(i => i.Id == s.GroupId).Select(i => i.Name).Single(),
-                    r.Note)).Where(p => p.Group.Contains("ПІ-15")));
+        {
+            return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            return View();
+        }
 
+        public IActionResult About()
+        {
+            ViewData["Message"] = "NURE Marks - електронний журнал ХНУРЕ";
             return View();
         }
 

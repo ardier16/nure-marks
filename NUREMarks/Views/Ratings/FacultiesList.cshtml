@@ -1,0 +1,565 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Списки потоків";
+}
+
+<h2 class="faculties-header">Списки потоків</h2>
+<div id="course-list">
+    <ul class="list-inline">
+        <li class="btn btn-success highlight">1 курс</li>
+        <li class="btn btn-success">2 курс</li>
+        <li class="btn btn-success">3 курс</li>
+        <li class="btn btn-success">4 курс</li>
+        <li class="btn btn-success">5 курс</li>
+        <li class="btn btn-success">6 курс</li>
+    </ul>
+</div>
+    <div class="panel-group" id="collapse-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#collapse-group" href="#faculty1">Факультет автоматики та комп'ютеризованих технологій (АКТ)</a>
+                </h4>
+            </div>
+            <div id="faculty1" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="АКТСІ_АКТАКІТ">АКТСІ_АКТАКІТ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="АКТСІу_АКТАКІТу">АКТСІу_АКТАКІТу</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ТРРЕА">ТРРЕА</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ТРРЕАу">ТРРЕАу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="СІ">СІ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="СІу">СІу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="РЕА">РЕА</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="РЕАу">РЕАу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="АКІТ">АКІТ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="АКІТу">АКІТу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="СІ">СІ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="СІу">СІу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="РЕА">РЕА</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="РЕАу">РЕАу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="АКІТ">АКІТ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="АКІТу">АКІТу</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="СІ">СІ</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="РЕА">РЕА</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="АКІТ">АКІТ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="АУТП_КІТПВ_КСУА_КТРС">АУТП КІТПВ КСУА КТРС</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="РЕАЗ_ІТМРТ">РЕАЗ ІТМРТ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#collapse-group" href="#faculty2">Факультет інфокомунікацій (ІК)</a>
+                </h4>
+            </div>
+            <div id="faculty2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="КУІБ">КУІБ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ТРТК">ТРТК</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ТРТКу">ТРТКу</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="МТМСС">МТМСС</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="МТМІВТу">МТМІВТу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ТК">ТК</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ТКу">ТКу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="УІБ">УІБ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="МСС">МСС</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="МІВТу">МІВТу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ТК">ТК</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ТКу">ТКу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="УІБ">УІБ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="МСС">МСС</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="МІВТу">МІВТу</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="ТК">ТК</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="УІБ">УІБ</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="МСС">МСС</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="МІВТ">МІВТ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="МВТ_МЗВЯП_ЯСС">МВТ МЗВЯП ЯСС</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="АМСЗІ">АМСЗІ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="ІМЗ_ТСМ">ІМЗ ТСМ</a>
+                    </div>
+                    <div class="dep sixth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="6" asp-route-dep="АМСЗІ">АМСЗІ</a>
+                    </div>
+                    <div class="dep sixth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="6" asp-route-dep="ЯСС">ЯСС</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#collapse-group" href="#faculty3">Факультет інформаційних радіотехнологій і технічного захисту інформації (ІРТЗІ)</a>
+                </h4>
+            </div>
+            <div id="faculty3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ЕАТ">ЕАТ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ЕАТу">ЕАТу</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ТРРТ">ТРРТ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ТРРТу">ТРРТу</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="КСТЗI">КСТЗІ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="КСТЗIу">КСТЗІу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="СТЗIу">СТЗІу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="АТ">АТ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="АТу">АТу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="РТ">РТ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="РТу">РТу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="СТЗI">СТЗІ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="АТ">АТ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="АТу">АТу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="РТ">РТ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="РТу">РТу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="СТЗI">СТЗІ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="СТЗIу">СТЗІу</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="РТ">РТ</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="СТЗI">СТЗІ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="ІКТ">ІКТ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="СТЗIЗ">СТЗІЗ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="РПСК_АРТ_РТ">РПСК АРТ РТ</a>
+                    </div>
+                    <div class="dep sixth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="6" asp-route-dep="СТЗIА">СТЗІА</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#collapse-group" href="#faculty4">Факультет інформаційно-аналітичних технологій та менеджменту (ІТМ)</a>
+                </h4>
+            </div>
+            <div id="faculty4" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ITIНФу">ІТІНФу</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ЕЕК">ЕЕК</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ППМ">ППМ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="CТСА">СТСА</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ITIНФ">ІТІНФ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="IНФу">ІНФу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ЕК">ЕК</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="СА">СА</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ПМ">ПМ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="IНФ">ІНФ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ЕК">ЕК</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="СА">СА</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ПМ">ПМ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="IНФ">ІНФ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="IНФу">ІНФу</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="IНФ">ІНФ</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="ЕК">ЕК</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="СА">СА</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="ПМ">ПМ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="ЕК">ЕК</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="ПМ">ПМ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="САУ_СТКС">САУ СТКС</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="IНФ_ІТКС_СІ">ІНФ ІТКС СІ</a>
+                    </div>
+                    <div class="dep sixth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="6" asp-route-dep="САУ">САУ</a>
+                    </div>
+                    <div class="dep sixth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="6" asp-route-dep="ПМ">ПМ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#collapse-group" href="#faculty5">Факультет комп'ютерної інженерії та управління (КІУ)</a>
+                </h4>
+            </div>
+            <div id="faculty5" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="КБІКС">КБІКС</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="КІУКІ">КІУКІ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="КІУКІу">КІУКІу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="БІКС">БІКС</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="КІ">КІ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="КІу">КІу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="КІ">КІ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="КІу">КІу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="БІКС">БІКС</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="КІ">КІ</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="БІКС">БІКС</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="БІКС_БДІР">БІКС БДІР</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="СКС_КСП_СП">СКС КСП СП</a>
+                    </div>
+                    <div class="dep sixth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="6" asp-route-dep="БІКС">БІКС</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#collapse-group" href="#faculty6">Факультет комп'ютерних наук (КН)</a>
+                </h4>
+            </div>
+            <div id="faculty6" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ПЗПІ">ПЗПІ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ІТКН">ІТКН</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ІТКНу">ІТКНу</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ВПВПС">ВПВПС</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ПІ">ПІ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="КН">КН</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ВПС">ВПС</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ПІ">ПІ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="КН">КН</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ВПС">ВПС</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="ПІ">ПІ</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="КН">КН</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="ВПС">ВПС</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="ІПЗ_ПЗС">ІПЗ ПЗС</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="КТСВПВ_ТЕМВ">КТСВПВ ТЕМВ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="ІТП_ІУСТ_СПР_СШІ">ІТП ІУСТ СПР СШІ</a>
+                    </div>
+                    <div class="dep sixth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="6" asp-route-dep="ІПЗ_ПЗС">ІПЗ ПЗС</a>
+                    </div>
+                    <div class="dep sixth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="6" asp-route-dep="КТСВПВ_ТЕМВ">КТСВПВ ТЕМВ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#collapse-group" href="#faculty7">Факультет електронної та бiомедичної інженерії (ЕЛБІ)</a>
+                </h4>
+            </div>
+            <div id="faculty7" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="МТОТ">МТОТ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="МТОТу">МТОТу</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="БІБМІ">БІБМІ</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="БІБМІу">БІБМІу</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ЕЕПС">ЕЕПС</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="ЕЕПСу">ЕЕПСу</a>
+                    </div>
+                    <div class="dep first">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="1" asp-route-dep="МНТМН">МНТМН</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ЕПСу">ЕПСу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="МН">МН</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ОТ">ОТ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ОТу">ОТу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="БМІ">БМІ</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="БМІу">БМІу</a>
+                    </div>
+                    <div class="dep second">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="2" asp-route-dep="ЕПС">ЕПС</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="МН">МН</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ОТ">ОТ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ОТу">ОТу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="БМІ">БМІ</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="БМІу">БМІу</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ЕПС">ЕПС</a>
+                    </div>
+                    <div class="dep third">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="3" asp-route-dep="ЕПСу">ЕПСу</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="ОТ">ОТ</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="МН">МН</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="БМІ">БМІ</a>
+                    </div>
+                    <div class="dep fourth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="4" asp-route-dep="ЕПС">ЕПС</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="ЕПП">ЕПП</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="МНП">МНП</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="БМІ_ІТБМ">БМІ ІТБМ</a>
+                    </div>
+                    <div class="dep fifth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="5" asp-route-dep="ФТОІ_ЛОЕТ">ФТОІ ЛОЕТ</a>
+                    </div>
+                    <div class="dep sixth">
+                        <a class="btn btn-info" asp-area="" asp-controller="Ratings" asp-action="Ratings" asp-route-course="6" asp-route-dep="ФТОІ"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
