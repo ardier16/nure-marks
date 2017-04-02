@@ -9,20 +9,20 @@ using NUREMarks.Models;
 
 namespace NUREMarks.Controllers
 {
+    
     public class RatingsController : Controller
     {
-        MarksContext db;
-        public RatingsController(MarksContext context)
+        //MarksContext db;
+        public RatingsController()
         {
-            db = context;
         }
 
         // GET: /<controller>/
         [HttpGet]
-        public IActionResult Ratings(string dep, int course)
+        public IActionResult Ratings()
         {
             //return View(new PDFParser(path).Students);
-
+            /*
             Group group = (from g in db.Groups
                            where g.DepShort == dep && g.Course == course
                            select g).ToList().First();
@@ -46,24 +46,29 @@ namespace NUREMarks.Controllers
                             Info = r.Note
                         }
                         );
+                        */
+
+            return View();
         }
 
         [HttpGet]
         public IActionResult Top100()
         {
             //return View(new PDFParser(path).Students);
-            return View((from r in db.Ratings
-                        join st in db.Students on r.StudentId equals st.Id
-                        join g in db.Groups on st.GroupId equals g.Id
-                        orderby r.Value descending, r.Note descending, g.Name, st.Name
-                        select new StudentData
-                        {
-                            Name = st.Name,
-                            Group = g.Name,
-                            Rating = r.Value,
-                            Info = r.Note
-                        }
-                        ).Take(100));
+            /* return View((from r in db.Ratings
+                         join st in db.Students on r.StudentId equals st.Id
+                         join g in db.Groups on st.GroupId equals g.Id
+                         orderby r.Value descending, r.Note descending, g.Name, st.Name
+                         select new StudentData
+                         {
+                             Name = st.Name,
+                             Group = g.Name,
+                             Rating = r.Value,
+                             Info = r.Note
+                         }
+                         ).Take(100));
+                         */
+            return View();
         }
 
         [HttpGet]

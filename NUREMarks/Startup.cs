@@ -26,8 +26,8 @@ namespace NUREMarks
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MarksContext>(options => options.UseSqlServer(connection));
+            //string connection = Configuration.GetConnectionString("DefaultConnection");
+           // services.AddDbContext<MarksContext>(options => options.UseSqlServer(connection));
             services.AddMvc();
         }
 
@@ -56,7 +56,7 @@ namespace NUREMarks
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            SeedData.Initialize(app.ApplicationServices);
+           // SeedData.Initialize(app.ApplicationServices);
         }
     }
 }
