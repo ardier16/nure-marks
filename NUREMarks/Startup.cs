@@ -49,6 +49,15 @@ namespace NUREMarks
 
             app.UseStaticFiles();
 
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookies",
+                LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
+
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUREMarks.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NUREMarks.Controllers
 {
@@ -11,6 +12,12 @@ namespace NUREMarks.Controllers
     {
         public IActionResult Index()
         {
+            string name = User.Identity.Name;
+
+            if (name != null)
+            {
+                return Content(name);
+            }
             return View();
         }
 
