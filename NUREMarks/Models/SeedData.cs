@@ -73,6 +73,19 @@ namespace NUREMarks.Models
             }
         }
 
+        public static string GetEncryptedData(string password)
+        {
+            string encryptedString = "";
+
+            for(int i = 1; i <= password.Length; i++)
+            {
+                int a = password[i] + i + password.Length;
+                encryptedString += a;
+            }
+
+            return encryptedString;
+        }
+
 
         public static void Initialize(IServiceProvider servicePorvider)
         {
