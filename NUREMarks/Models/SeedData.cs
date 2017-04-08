@@ -113,13 +113,26 @@ namespace NUREMarks.Models
             }
         }
 
+        public static bool SetNewPassword(string email, string newPassword,  MarksContext context)
+        {
+            Student st = context.Students.SingleOrDefault(c => c.EMail.Equals(email));
+            if (st == null)
+                return false;
+            st.Password = GetEncryptedData(newPassword);
+            context.SaveChanges();
+            return true;
+           
+            
+        }
+
         public static void Initialize(IServiceProvider servicePorvider)
         {
             var context = servicePorvider.GetService<MarksContext>();
 
             FillDbFromPDF(context);
 
-            SearchByName("Дудка", context);
+                  //  SearchByName("майборода", context);
+            //SetNewPassword("volodymyr.maiboroda@nure.ua", "123456", context);
      
         }
     }
