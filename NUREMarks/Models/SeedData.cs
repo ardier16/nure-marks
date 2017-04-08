@@ -8,7 +8,7 @@ namespace NUREMarks.Models
 {
     public static class SeedData
     {
-       public static void FillDbFromPDF(MarksContext context)
+        public static void FillDbFromPDF(MarksContext context)
         {
             if (!context.Students.Any())
             {
@@ -47,7 +47,7 @@ namespace NUREMarks.Models
                             Student s = new Student
                             {
                                 EMail = EmailGenerator.GenerateNureEmail(list[j].Name),
-                                Password = "123456",
+                                Password = GetEncryptedData("123456"),
                                 Name = list[j].Name,
                                 Group = context.Groups.First(p => p.Name == list[j].Group),
                                 IsBudgetary = list[j].Info == "контракт" ? false : true
@@ -77,13 +77,28 @@ namespace NUREMarks.Models
         {
             string encryptedString = "";
 
-            for(int i = 1; i <= password.Length; i++)
+            for (int i = 0; i < password.Length; i++)
             {
-                int a = password[i] + i + password.Length;
+                int a = password[i] + i+1 + password.Length;
                 encryptedString += a;
             }
 
             return encryptedString;
+        }
+
+        /// <summary>
+        /// тимчасовий метод для кодування паролів
+        /// </summary>
+        /// <param name="context"></param>
+        public static void setNewPassword(MarksContext context) 
+        {
+            var students = context.Students;
+            foreach(Student s in students)
+            {
+                s.Password = GetEncryptedData(s.Password);
+            }
+
+            context.SaveChanges();
         }
 
 
@@ -92,6 +107,7 @@ namespace NUREMarks.Models
             var context = servicePorvider.GetService<MarksContext>();
 
             FillDbFromPDF(context);
+            setNewPassword(context);
         }
     }
 }
