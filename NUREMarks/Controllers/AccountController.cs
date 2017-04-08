@@ -30,8 +30,9 @@ namespace NUREMarks.Controllers
         {
             if (ModelState.IsValid)
             {
+                string password = SeedData.GetEncryptedData(model.Password);
                 Student student = await db.Students.FirstOrDefaultAsync(
-                    s => s.EMail == model.EMail && s.Password == model.Password);
+                    s => s.EMail == model.EMail && s.Password == password);
 
                 if (student != null)
                 {

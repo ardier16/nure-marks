@@ -3,6 +3,8 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace NUREMarks.Models
 {
@@ -75,39 +77,23 @@ namespace NUREMarks.Models
 
         public static string GetEncryptedData(string password)
         {
-            string encryptedString = "";
+            byte[] data = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            for (int i = 0; i < password.Length; i++)
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < data.Length; i++)
             {
-                int a = password[i] + i+1 + password.Length;
-                encryptedString += a;
+                sb.Append(data[i].ToString("x2"));
             }
 
-            return encryptedString;
+            return sb.ToString();
         }
-
-        /// <summary>
-        /// тимчасовий метод для кодування паролів
-        /// </summary>
-        /// <param name="context"></param>
-        public static void setNewPassword(MarksContext context) 
-        {
-            var students = context.Students;
-            foreach(Student s in students)
-            {
-                s.Password = GetEncryptedData(s.Password);
-            }
-
-            context.SaveChanges();
-        }
-
 
         public static void Initialize(IServiceProvider servicePorvider)
         {
             var context = servicePorvider.GetService<MarksContext>();
 
             FillDbFromPDF(context);
-            setNewPassword(context);
         }
     }
 }
