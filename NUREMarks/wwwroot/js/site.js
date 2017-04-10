@@ -82,3 +82,19 @@ window.onload = function () {
         rates[i].style.backgroundColor = SetRatingColor(rates[i].innerText.split(',')[0]);
     }
 };
+
+
+$('#search-field').keyup(function (e) {
+    if (e.keyCode == 13) {
+        showSearchResults();
+    }
+});
+
+$('#search-button').click(function (e) {
+    showSearchResults();
+});
+
+
+function showSearchResults() {
+    window.location.href = '/Ratings/Search?name=' + $("#search-field").val();
+}

@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = ViewData["Department"] + ", " + ViewData["Course"] + " курс";
+    int i = 1;
+
+}
+
+<div id="ratings-header">
+    <h3>Результаты поиска студентов по запросу @ViewData["SearchName"]</h3><br />
+</div>
+<table class="table ratings-table">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>П.І.Б.</th>
+            <th>Група</th>
+            <th>Рейтинг</th>
+            <th>Додаткова інформація</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+            {
+            <tr>
+                <td>@(i++)</td>
+                <td>@p.Name</td>
+                <td>@p.Group</td>
+                <td>
+                    <div class="rate">@p.Rating</div>
+                </td>
+                <td>@p.Info</td>
+            </tr>
+        }
+    </tbody>
+</table>

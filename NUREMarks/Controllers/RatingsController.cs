@@ -71,5 +71,24 @@ namespace NUREMarks.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Search(string name)
+        {
+            ViewData["SearchName"] = name;
+
+            return View(from students in db.Students
+                        join ratings in db.Ratings on students.Id equals ratings.StudentId
+                        join groups in db.Groups on students.GroupId equals groups.Id
+                        where students.Name.ToLower().Contains(name.ToLower())
+                        orderby ratings.Value descending, ratings.Note descending, groups.Name, students.Name
+                        select new StudentData
+                        {
+                            Name = students.Name,
+                            Group = groups.Name,
+                            Rating = ratings.Value,
+                            Info = ratings.Note
+                        });
+        }
     }
 }

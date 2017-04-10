@@ -89,30 +89,6 @@ namespace NUREMarks.Models
             return sb.ToString();
         }
 
-        public static void SearchByName(string name, MarksContext context)
-        {
-            var findStudent = from students in context.Students
-                              join ratings in context.Ratings on students.Id equals ratings.StudentId
-                              join groups in context.Groups on students.GroupId equals groups.Id
-                              where students.Name.ToLower().Contains(name.ToLower())
-                              select  new { 
-                                  IdStudent = students.Id,
-                                  NameStudent = students.Name,
-                                  GroupStudent = groups.Name,
-                                  RatingStudent = ratings.Value,
-                                  NoteStudent = ratings.Note
-                              };
-
-            foreach(var c in findStudent)
-            {
-                int id  = c.IdStudent;
-                string namestud = c.NameStudent;
-                string froupna = c.GroupStudent;
-                double rating = c.RatingStudent;
-                string note = c.NoteStudent;
-            }
-        }
-
         public static bool SetNewPassword(string email, string newPassword,  MarksContext context)
         {
             Student st = context.Students.SingleOrDefault(c => c.EMail.Equals(email));
