@@ -32,3 +32,16 @@
         }
     </tbody>
 </table>
+
+@if (i == 1)
+{
+    <h2>По вашему запросу не найдено ни одного студента</h2>
+    <h3>Попробуйте выполнить поиск снова</h3>
+    <div class="form-group search-form input-group">
+        <input class="form-control input-lg" id="search-field" type="text" autofocus="" placeholder="Введите имя студента ">
+        <span class="input-group-btn">
+            <a class="btn btn-default" id="search-button">Искать</a>
+        </span>
+    </div>
+
+}

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUREMarks", "NUREMarks\NUREMarks.csproj", "{94735CD6-FD4A-4261-AAD7-18447BB4E24B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUREMarks", "NUREMarks\NUREMarks.csproj", "{61CE174A-AA43-4627-887C-8A50E3F775C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{94735CD6-FD4A-4261-AAD7-18447BB4E24B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94735CD6-FD4A-4261-AAD7-18447BB4E24B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94735CD6-FD4A-4261-AAD7-18447BB4E24B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94735CD6-FD4A-4261-AAD7-18447BB4E24B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61CE174A-AA43-4627-887C-8A50E3F775C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61CE174A-AA43-4627-887C-8A50E3F775C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61CE174A-AA43-4627-887C-8A50E3F775C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61CE174A-AA43-4627-887C-8A50E3F775C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

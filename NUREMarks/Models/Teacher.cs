@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace NUREMarks.Models
+﻿namespace NUREMarks.Models
 {
     public class Teacher
     {
