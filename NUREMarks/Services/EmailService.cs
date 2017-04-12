@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace NUREMarks.Services
 {
-    public class EmailService
+    public class EmailService : IEmailSender
     {
-        public async Task SendEmailAsync(string email, string subject, string message)
+        public void SendEmail(string email, string subject, string message)
         {
             // STEP 1: Navigate to this page https://www.google.com/settings/security/lesssecureapps & set to "Turn On"
 

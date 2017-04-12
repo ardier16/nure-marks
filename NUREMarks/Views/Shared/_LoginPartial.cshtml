@@ -13,7 +13,7 @@
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Здравствуйте, @db.Users.ToList().Find(u => u.UserName.Equals(UserManager.GetUserName(User))).Name</a>
             </li>
             <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Выйти</button>
             </li>
         </ul>
     </form>

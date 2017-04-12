@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NUREMarks.Models
+namespace NUREMarks.Services
 {
     static class EmailGenerator
     {

@@ -5,8 +5,9 @@ using System.Text;
 using Xfinium.Pdf;
 using Xfinium.Pdf.Content;
 using System.IO;
+using NUREMarks.Models;
 
-namespace NUREMarks.Models
+namespace NUREMarks.Services
 {
 
     public class PDFParser

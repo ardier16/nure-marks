@@ -1,0 +1,37 @@
+﻿@model List<Mark>
+
+@{
+    ViewData["Title"] = "Профиль";
+    int i = 1;
+}
+
+<h2>Профиль</h2>
+<h3>Студент: @ViewData["name"]</h3>
+<h3>Рейтинг: @ViewData["rating"]</h3>
+<br />
+<h2>Оценки</h2>
+<br />
+
+<table class="table ratings-table">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Предмет</th>
+            <th>Студент</th>
+            <th>Оценка</th>
+            <th>Семестр</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+            {
+            <tr>
+                <td>@(i++)</td>
+                <td>@p.SubjectId</td>
+                <td>@p.StudentId</td>
+                <td>@p.Value</td>
+                <td>@p.SemesterId</td>
+            </tr>
+        }
+    </tbody>
+</table>
