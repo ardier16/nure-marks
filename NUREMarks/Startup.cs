@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using NUREMarks.Data;
 using NUREMarks.Models;
 using NUREMarks.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NUREMarks
 {
@@ -47,7 +48,11 @@ namespace NUREMarks
                 .AddEntityFrameworkStores<MarksContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.SslPort = 44341;
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -74,6 +79,13 @@ namespace NUREMarks
             app.UseStaticFiles();
 
             app.UseIdentity();
+
+            app.UseGoogleAuthentication(new GoogleOptions()
+            {
+                ClientId = Configuration["client_id"],
+                ClientSecret = Configuration["client_secret"]
+            });
+
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 

@@ -206,6 +206,29 @@ namespace NUREMarks.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
+            string email = info.Principal.Claims.ToList()[4].Value.ToString();
+
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user != null)
+            {
+                if (user.Logins.Count == 0)
+                {
+                    var result = await _userManager.AddLoginAsync(user, info);
+                    _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
+                }
+
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToLocal(returnUrl);
+                
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(nameof(Login));
+            }
+
+            /*
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
@@ -229,6 +252,7 @@ namespace NUREMarks.Controllers
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
                 return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
             }
+            */
         }
 
         //
@@ -310,11 +334,11 @@ namespace NUREMarks.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
                 // Send an email with this link
-                //var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                //var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-                //return View("ForgotPasswordConfirmation");
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                await _emailSender.SendEmailAsync(model.Email, "Reset Password",
+                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                return View("ForgotPasswordConfirmation");
             }
 
             // If we got this far, something failed, redisplay form
