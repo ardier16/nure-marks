@@ -6,8 +6,10 @@
 }
 
 <h2>Профиль</h2>
+<p class="text-success">@ViewData["StatusMessage"]</p>
 <h3>Студент: @ViewData["name"]</h3>
 <h3>Рейтинг: @ViewData["rating"]</h3>
+<a asp-controller="Profile" asp-action="ChangePassword" class="btn-bracketed">Изменить пароль</a>
 <br />
 <h2>Оценки</h2>
 <br />

@@ -175,7 +175,7 @@ namespace NUREMarks.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, String.Format("Аккаунт {0} не является зарегистрированным в системе. Проверьте правильность ввода.", email));
+                ModelState.AddModelError(string.Empty, String.Format("Аккаунт {0} не является зарегистрированным в системе.", email));
                 return View(nameof(Login));
             }
         }
