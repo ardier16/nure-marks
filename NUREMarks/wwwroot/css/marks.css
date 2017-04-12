@@ -16,11 +16,6 @@ footer {
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
 
 /* Carousel */
 .carousel-caption p {
@@ -102,4 +97,8 @@ textarea {
     text-align: center;
     font-family: "Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Hiragino Kaku Gothic Pro",Meiryo,"Malgun Gothic",sans-serif;
     padding: 5px;
+}
+
+.btn-default {
+    font-size: 23px;
 }

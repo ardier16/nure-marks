@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NURE Marks</title>
+    <title>@ViewData["Title"] - NUREMarks</title>
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -36,11 +36,8 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Про систему</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Контакти</a>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <!--<li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>-->
-                    <li><a href="/Account/Login">Авторизація</a></li>
-                </ul>
-</div>
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
         </div>
     </nav>
     <div class="container body-content">
@@ -74,4 +71,5 @@
 
     @RenderSection("Scripts", required: false)
 </body>
+
 </html>
