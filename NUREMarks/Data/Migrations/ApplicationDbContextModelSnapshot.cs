@@ -238,29 +238,11 @@ namespace NUREMarks.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("TeacherId");
+                    b.Property<string>("Teacher");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TeacherId");
 
                     b.ToTable("Subjects");
-                });
-
-            modelBuilder.Entity("NUREMarks.Models.Teacher", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Department");
-
-                    b.Property<string>("EMail");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("NUREMarks.Models.User", b =>
@@ -392,14 +374,6 @@ namespace NUREMarks.Data.Migrations
                     b.HasOne("NUREMarks.Models.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("NUREMarks.Models.Subject", b =>
-                {
-                    b.HasOne("NUREMarks.Models.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -6,6 +6,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using NUREMarks.Services;
 
 namespace NUREMarks.Models
 {
@@ -30,6 +31,9 @@ namespace NUREMarks.Models
                 context.SaveChanges();
 
                 string[] dirs = Directory.GetDirectories("wwwroot\\pdf");
+                var students = new List<Student>();
+                var groups = new List<Group>();
+                var ratings = new List<Rating>();
 
                 for (int k = 0; k < dirs.Length; k++)
                 {
@@ -54,19 +58,7 @@ namespace NUREMarks.Models
                                 IsBudgetary = list[j].Info == "контракт" ? false : true
                             };
 
-                            context.Students.Add(s);
-                            context.SaveChanges();
-
-                            User u = new User
-                            {
-                                Email = EmailGenerator.GenerateNureEmail(list[j].Name),
-                                PasswordHash = GetEncryptedData("123456"),
-                                UserName = s.Name.Split(' ')[1],
-                                Student = s
-                            };
-
-                            context.Users.Add(u);
-                            context.SaveChanges();
+                            students.Add(s);
 
                             Rating r = new Rating
                             {
@@ -77,48 +69,33 @@ namespace NUREMarks.Models
                                 Note = list[j].Info
                             };
 
-                            context.Ratings.Add(r);
+                            ratings.Add(r);
                         }
-                        context.SaveChanges();
                     }
+
+                    
                 }
+
+                context.Students.AddRange(students);
+                context.Ratings.AddRange(ratings);
+                context.SaveChanges();
             }
-        }
-
-        public static string GetEncryptedData(string password)
-        {
-            byte[] data = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(password));
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                sb.Append(data[i].ToString("x2"));
-            }
-
-            return sb.ToString();
-        }
-
-        public static bool SetNewPassword(string email, string newPassword,  MarksContext context)
-        {
-            User st = context.Users.SingleOrDefault(c => c.Email.Equals(email));
-            if (st == null)
-                return false;
-            st.PasswordHash = GetEncryptedData(newPassword);
-            context.SaveChanges();
-            
-            return true;
-           
-            
         }
 
         public static void Initialize(IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetService<MarksContext>();
-            var users = new List<User>();
+            //var users = new List<User>();
 
             FillDbFromPDF(context);
 
+            AddSubjects(context);
+            AddMarks(context);
+
+
+
+
+            /*
             var em = context.Users.ToList().GroupBy(u => u.Email).Where(r => r.Count() > 1).Select(s => s.Key).ToList();
 
             for (int i = 0; i < em.Count; i++)
@@ -154,7 +131,7 @@ namespace NUREMarks.Models
 
 
             var students = context.Students.ToList();
-            /*
+            
             for (int i = 0; i < students.Count; i++)
             {
                 User u = new User
@@ -194,6 +171,270 @@ namespace NUREMarks.Models
         }
 
 
+        public static void AddSubjects(MarksContext db)
+        {
+            if (!db.Subjects.Any())
+            {
+                List<string> teachers = new List<string>();
+                List<Subject> subjects = new List<Subject>();
+
+                teachers.Add("Горячковская Анна Николаевна");
+                teachers.Add("Мазурова Оксана Валерьевна");
+                teachers.Add("Валенда Наталья Анатольевна");
+                teachers.Add("Лановой Алексей Феликсович");
+                teachers.Add("Мельникова Роксана Валерьевна");
+                teachers.Add("Бабий Андрей Степанович");
+
+                subjects.Add(new Subject
+                {
+                    Abbreviation = "Фил",
+                    Course = 2,
+                    Credits = 5,
+                    Name = "Философия",
+                    Teacher = teachers[0]
+                });
+
+                subjects.Add(new Subject
+                {
+                    Abbreviation = "БД",
+                    Course = 2,
+                    Credits = 5,
+                    Name = "Базы данных",
+                    Teacher = teachers[1]
+                });
+
+                subjects.Add(new Subject
+                {
+                    Abbreviation = "ОИГ",
+                    Course = 2,
+                    Credits = 5,
+                    Name = "Основы игровой графики",
+                    Teacher = teachers[2]
+                });
+
+                subjects.Add(new Subject
+                {
+                    Abbreviation = "АКОКС",
+                    Course = 2,
+                    Credits = 5,
+                    Name = "Архитектура компьютера и организация компьютерных сетей",
+                    Teacher = teachers[3]
+                });
+
+                subjects.Add(new Subject
+                {
+                    Abbreviation = "ЧМВ",
+                    Course = 2,
+                    Credits = 5,
+                    Name = "Человеко-машинное взаимодействие",
+                    Teacher = teachers[4]
+                });
+
+                subjects.Add(new Subject
+                {
+                    Abbreviation = "ТВМСиЭМПИ",
+                    Course = 2,
+                    Credits = 5,
+                    Name = "Теория вероятностейб математическая статистика и эмпирические методы программной инженерии",
+                    Teacher = teachers[5]
+                });
+
+                subjects.Add(new Subject
+                {
+                    Abbreviation = "БД (курс)",
+                    Course = 2,
+                    Credits = 5,
+                    Name = "Базы данных (курсовой проект)",
+                    Teacher = teachers[1]
+                });
+
+                db.Subjects.AddRange(subjects);
+                db.SaveChanges();
+            }
+        }
+
+        public static void AddMarks(MarksContext db)
+        {
+            if (!db.Marks.Any())
+            {
+                Student st = db.Students.ToList().Find(x => x.Name.Contains("Шопинський"));
+                Student st2 = db.Students.ToList().Find(x => x.Name.Contains("Майборода Володимир"));
+                Student st3 = db.Students.ToList().Find(x => x.Name.Contains("Надточій Євген"));
+                Semester sem = db.Semesters.First();
+                List<Subject> subj = db.Subjects.ToList();
+                List<Mark> marks = new List<Mark>();
+
+                marks.Add(new Mark
+                {
+                    Value = 96,
+                    Student = st,
+                    Semester = sem,
+                    Subject = subj[0]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 96,
+                    Student = st,
+                    Semester = sem,
+                    Subject = subj[1]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 96,
+                    Student = st,
+                    Semester = sem,
+                    Subject = subj[2]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 98,
+                    Student = st,
+                    Semester = sem,
+                    Subject = subj[3]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 96,
+                    Student = st,
+                    Semester = sem,
+                    Subject = subj[4]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 98,
+                    Student = st,
+                    Semester = sem,
+                    Subject = subj[5]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 100,
+                    Student = st,
+                    Semester = sem,
+                    Subject = subj[6]
+                });
+
+                //
+
+                marks.Add(new Mark
+                {
+                    Value = 88,
+                    Student = st2,
+                    Semester = sem,
+                    Subject = subj[0]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 92,
+                    Student = st2,
+                    Semester = sem,
+                    Subject = subj[1]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 90,
+                    Student = st2,
+                    Semester = sem,
+                    Subject = subj[2]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 90,
+                    Student = st2,
+                    Semester = sem,
+                    Subject = subj[3]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 75,
+                    Student = st2,
+                    Semester = sem,
+                    Subject = subj[4]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 95,
+                    Student = st2,
+                    Semester = sem,
+                    Subject = subj[5]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 96,
+                    Student = st2,
+                    Semester = sem,
+                    Subject = subj[6]
+                });
+
+                //
+
+                marks.Add(new Mark
+                {
+                    Value = 72,
+                    Student = st3,
+                    Semester = sem,
+                    Subject = subj[0]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 90,
+                    Student = st3,
+                    Semester = sem,
+                    Subject = subj[1]
+                });
+
+
+                marks.Add(new Mark
+                {
+                    Value = 92,
+                    Student = st3,
+                    Semester = sem,
+                    Subject = subj[3]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 65,
+                    Student = st3,
+                    Semester = sem,
+                    Subject = subj[4]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 84,
+                    Student = st3,
+                    Semester = sem,
+                    Subject = subj[5]
+                });
+
+                marks.Add(new Mark
+                {
+                    Value = 88,
+                    Student = st3,
+                    Semester = sem,
+                    Subject = subj[6]
+                });
+
+
+
+                db.Marks.AddRange(marks);
+                db.SaveChanges();
+            }
+        }
 
 
 

@@ -15,6 +15,13 @@ footer {
     padding-right: 15px;
 }
 
+
+input,
+select,
+textarea {
+    max-width: 350px;
+}
+
 /* Set widths on the form inputs since otherwise they're 100% wide */
 
 /* Carousel */
@@ -79,7 +86,7 @@ footer {
 
 #main-title {
     text-align: center;
-    margin-top: 5%;
+    margin-top: 2%;
 }
 
 /* Hide/rearrange for smaller screens */
@@ -97,8 +104,40 @@ footer {
     text-align: center;
     font-family: "Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Hiragino Kaku Gothic Pro",Meiryo,"Malgun Gothic",sans-serif;
     padding: 5px;
+    max-width: 70px;
 }
 
 .btn-default {
     font-size: 23px;
+}
+
+.page-title {
+    text-align: center;
+}
+
+.form-control {
+    display: inline;
+    font-size: 14pt;
+    height: 45px;
+}
+
+.btn-danger {
+    background-color: #dd4b39;
+}
+
+.login-button {
+    width: 270px;
+    font-size: 16pt;
+}
+
+#search-field {
+    max-width: 100%;
+}
+
+.login-form {
+    font-size: 14pt;
+}
+
+.login-form input {
+    margin-top: 1%;
 }

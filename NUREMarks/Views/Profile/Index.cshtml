@@ -1,0 +1,69 @@
+﻿@model List<MarkInfo>
+
+@{
+    ViewData["Title"] = "Профиль";
+    int i = 1;
+}
+<div style="width: 75%; display: inline-block">
+    <h3 class="text-center">Информация</h3><br />
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <h4>Имя: <b>@ViewData["name"]</b></h4>
+    <h4>E-Mail: <i>@ViewData["email"]</i></h4>
+    <h4>Курс: @ViewData["course"]</h4>
+    <h4>Группа: @ViewData["group"]</h4>
+    <div style="
+    display: inline-block;
+">
+        <div style="
+    display: inline-block;
+"><h4>Рейтинг:</h4></div>
+        <div style="
+    display: inline-block;
+" class="rate">@ViewData["rating"]</div>
+        <div style="
+    display: inline-block;
+"><i>(@ViewData["uni-stat"] по университету, @ViewData["dep-stat"] по потоку)</i></div>
+    </div>
+    <br />
+    <h2 class="text-center">Оценки</h2>
+    <br />
+
+    <table class="table ratings-table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Семестр</th>
+                <th>Предмет</th>
+                <th>Преподаватель</th>
+                <th>Оценка</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@(i++)</td>
+                    <td>@p.Semester</td>
+                    <td><abbr title="@p.SubjectName">@p.SubjectAbbreviation</abbr></td>
+                    <td>@p.TeacherName</td>
+                    <td><div class="mark rate">@p.MarkValue</div></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="well" style="
+    vertical-align: top;
+    width: 21.5%;
+    margin-left: 3%;
+    display: inline-block;
+    margin-top: 90px;
+">
+    <ul class="nav nav-pills nav-stacked" style="
+">
+        <li class="active"><a style="background-color: #222" href="#"><i class="fa fa-home fa-fw"></i>Профиль</a></li>
+        <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Profile" asp-action="ChangePassword" class="btn-bracketed">Изменить пароль</a></li>
+        <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Ratings" asp-action="FacultiesList" class="btn-bracketed">Рейтинги</a></li>
+        <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Ratings" asp-action="Top100" class="btn-bracketed">Статистика</a></li>
+    </ul>
+</div>
