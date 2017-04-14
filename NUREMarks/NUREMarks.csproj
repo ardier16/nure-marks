@@ -13,12 +13,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\icon.png" />
     <Content Include="wwwroot\css\marks.css" />
     <Content Include="wwwroot\favicon.ico" />
     <Content Include="wwwroot\images\banner1.png" />
     <Content Include="wwwroot\images\banner2.png" />
     <Content Include="wwwroot\images\banner3.png" />
     <Content Include="wwwroot\images\banner4.png" />
+    <Content Include="wwwroot\images\main.PNG" />
     <Content Include="wwwroot\js\site.js" />
     <Content Include="wwwroot\js\site.min.js" />
     <Content Include="wwwroot\lib\bootstrap\.bower.json" />
@@ -351,6 +358,10 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
 </Project>

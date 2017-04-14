@@ -62,7 +62,7 @@ namespace NUREMarks.Controllers
             var students = db.Students.ToList();
             var users = db.Users.ToList();
 
-            for (int i = 0; i < students.Count; i++)
+            for (int i = 0; i < 0; i++)
             {
                 string email = EmailGenerator.GenerateNureEmail(students[i].Name);
 
@@ -170,8 +170,8 @@ namespace NUREMarks.Controllers
                 }
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToLocal(returnUrl);
-                
+                return RedirectToAction(nameof(ProfileController.Index), "Profile");
+
             }
             else
             {
@@ -210,8 +210,11 @@ namespace NUREMarks.Controllers
                 EmailService emailSender = new EmailService();
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                emailSender.SendEmail(model.Email, "Восстановление пароля",
-                   $"Для восстановления пароля перейдите по <a href='{callbackUrl}'>ссылке</a>");
+                emailSender.SendEmail(model.Email, "Восстановление пароля аккаунта NURE Marks",
+                   $"<font color=\"black\" size=\"4\"><p>Для того, чтобы восстановить пароль от своего аккаунта перейдите по <a href='{callbackUrl}'>этой ссылке</a>.</p>" +
+                   $"<p>Если Вы не пытались восстановить свой пароль, проигнорируйте это письмо.</p></font>" +
+                   $"<div style=\"text-align: right; \"><font color=\"black\" size=\"3\"><i>С ув., администрация NURE Marks</font></i></div><hr />" +
+                   $"<font color=\"black\"><p>Это автоматически сгенерированное сообщение, на него не нужно отвечать.</p></font>");
                 return View("ForgotPasswordConfirmation");
             }
 

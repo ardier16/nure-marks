@@ -1,18 +1,17 @@
 ﻿@{
-    ViewData["Title"] = "Топ-100 рейтингів";
+    ViewData["Title"] = "Топ-100 рейтингов";
     int i = 1;
 
 }
 
-<h3>SE 2nd Course</h3>
-<table class="table-condensed">
+<h2 class="page-title">Топ 100 рейтингов ХНУРЭ</h2><br />
+<table class="table ratings-table">
     <thead>
         <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Group</th>
-            <th>Rating</th>
-            <th>Additional info</th>
+            <th>№</th>
+            <th>П.І.Б.</th>
+            <th>Група</th>
+            <th>Рейтинг</th>
         </tr>
     </thead>
     <tbody>
@@ -23,21 +22,12 @@
                 <td>@p.Name</td>
                 <td>@p.Group</td>
                 <td>
-                    <div class="rate" style='
-                     background-color: @p.Color();
-                     color: white;
-                     border-radius: 3pt;
-                     font-size: 11pt;
-                     text-align: center;
-                     font-family: "Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Hiragino Kaku Gothic Pro",Meiryo,"Malgun Gothic",sans-serif;
-                     padding: 5px;'>
-                        @p.Rating
-                    </div>
+                    <div class="rate">@p.Rating</div>
                 </td>
-                <td>@p.Info</td>
             </tr>
         }
     </tbody>
 </table>
+
 
 

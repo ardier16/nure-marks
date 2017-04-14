@@ -57,8 +57,7 @@ function showDeps(course)
     $("." + course).css("display", "inline-block")
 }
 
-function SetRatingColor(Rating)
-{
+function SetRatingColor(Rating) {
     if (Rating >= 92)
         return "rgb(5, 111, 51)";
     if (Rating >= 85)
@@ -75,11 +74,33 @@ function SetRatingColor(Rating)
     return "rgb(131, 131, 131)";
 }
 
+function SetMarkColor(Rating) {
+    if (Rating >= 96)
+        return "rgb(5, 111, 51)";
+    if (Rating >= 90)
+        return "rgb(23, 152, 46)";
+    if (Rating >= 80)
+        return "rgb(141, 193, 83)";
+    if (Rating >= 75)
+        return "rgb(246, 187, 67)";
+    if (Rating >= 70)
+        return "rgb(231, 126, 35)";
+    if (Rating >= 60)
+        return "rgb(233, 87, 62)";
+
+    return "rgb(131, 131, 131)";
+}
+
 window.onload = function () {
     var rates = document.getElementsByClassName('rate');
+    var marks = document.getElementsByClassName('mark');
 
     for (var i = 0; i < rates.length; i++) {
         rates[i].style.backgroundColor = SetRatingColor(rates[i].innerText.split(',')[0]);
+    }
+
+    for (var i = 0; i < marks.length; i++) {
+        marks[i].style.backgroundColor = SetMarkColor(marks[i].innerText);
     }
 };
 

@@ -8,9 +8,10 @@ using NUREMarks.Models;
 namespace NUREMarks.Data.Migrations
 {
     [DbContext(typeof(MarksContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170413152532_Marks")]
+    partial class Marks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

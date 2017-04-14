@@ -41,9 +41,36 @@ namespace NUREMarks.Controllers
                 ViewData["name"] = student.Name;
                 ViewData["rating"] = db.Ratings.Where(r => r.StudentId.Equals(student.Id)).First().Value;
 
-                List<Mark> marks = db.Marks.ToList().FindAll(m => m.StudentId.Equals(student.Id));
+                ViewData["uni-stat"] = (db.Ratings.ToList().OrderByDescending(r => r.Value).Select(r => r.StudentId).ToList().IndexOf(student.Id) + 1)
+                    + " из " + db.Ratings.ToList().Count;
 
-                return View(marks);
+                var gr = db.Groups.Where(g => g.Id.Equals(student.GroupId)).First();
+                var grs = db.Groups.Where(g => (g.Course.Equals(gr.Course) && g.Department.Equals(gr.Department))).Select(g => g.Id);
+                var studs = db.Students.Where(s => grs.Contains(s.GroupId)).Select(s => s.Id).ToList();
+                var rs = db.Ratings.Where(r => studs.Contains(r.StudentId)).ToList();
+
+                ViewData["dep-stat"] = (rs.OrderByDescending(r => r.Value).Select(r => r.StudentId).ToList().IndexOf(student.Id) + 1)
+                    + " из " + rs.ToList().Count;
+                ViewData["group"] = gr.Name;
+                ViewData["course"] = gr.Course;
+                ViewData["email"] = user.Email;
+
+                return View((from m in db.Marks
+                            join st in db.Students on m.StudentId equals st.Id
+                            join sub in db.Subjects on m.SubjectId equals sub.Id
+                            join sem in db.Semesters on m.SemesterId equals sem.Id
+                            where st.Id.Equals(student.Id)
+                            orderby sem.Year, sem.Season, sub.Name
+                            select new MarkInfo
+                            {
+                                StudentName = student.Name,
+                                SubjectName = sub.Name,
+                                SubjectAbbreviation = sub.Abbreviation,
+                                Semester = sem.Season + " " + sem.Year,
+                                TeacherName = sub.Teacher,
+                                MarkValue = m.Value
+                            }
+                        ).ToList());
             }
             else
             {
