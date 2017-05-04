@@ -1,0 +1,45 @@
+﻿@model List<StudentData>
+
+
+@{
+    ViewData["Title"] = "Статистика по факультету";
+    int i = 1;
+
+}
+
+<h2 class="page-title">Статистика по факультету</h2><br />
+<table class="table ratings-table table-hover">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Имя студента</th>
+            <th>Группа</th>
+            <th>Рейтинг</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+            {
+            <tr data-id="@i" @(ViewBag.Id == p.Id ? "class=me" : "")>
+                <td>@(i++)</td>
+                @{
+                    if (User.IsInRole("admin"))
+                    {
+                        <td><a asp-controller="Profile" asp-action="Student" asp-route-id="@p.Id">@p.Name</a></td>
+                    }
+                    else
+                    {
+                        <td>@p.Name</td>
+                    }
+                }
+                <td>@p.Group</td>
+                <td>
+                    <div class="rate">@p.Rating</div>
+                </td>
+            </tr>
+                    }
+    </tbody>
+</table>
+
+
+

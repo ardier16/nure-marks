@@ -1,0 +1,41 @@
+﻿@model NUREMarks.Models.MarksViewModels.AddViewModel
+
+
+@{
+    ViewData["Title"] = "Добавить оценку";
+}
+
+<h2 class="page-title">@ViewData["Title"]</h2>
+<div class="row text-center login-form">
+    <div>
+        <section>
+            <form asp-controller="Marks" asp-action="Add" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <h4>Введите информацию об оценке</h4>
+                <hr />
+                <input type="hidden" asp-for="StudentId" value="@ViewBag.StudentId" class="form-control" />
+                <div class="form-group">
+                    <label class="control-label">Предмет</label>
+                    <div>
+                        <select class="form-control" asp-for="Subject">
+                            @foreach (var item in ViewBag.SubList)
+                            {
+                                <option>@item.Abbreviation (@item.Teacher)</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Оценка</label>
+                    <div>
+                        <input asp-for="Value" type="number" min="60" max="100" class="form-control" /><br />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <button type="submit" class="btn btn-success login-button">Добавить</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

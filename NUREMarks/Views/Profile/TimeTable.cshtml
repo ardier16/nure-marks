@@ -1,0 +1,152 @@
+﻿@{
+    ViewData["Title"] = "Расписание";
+}
+
+<input type="hidden" value="@ViewBag.Text" id="htmlText"/>
+<h2 class="text-center">Расписание на группу ПИ-15-5</h2>
+<table class="table table-bordered timetable">
+    <thead>
+        <tr>
+            <th class="text-center">Время</th>
+            <th class="text-center">01.05.2017</th>
+            <th class="text-center">02.05.2017</th>
+            <th class="text-center">03.05.2017</th>
+            <th class="text-center">04.05.2017</th>
+            <th class="text-center">05.05.2017</th>
+            <th class="text-center">06.05.2017</th>
+            <th class="text-center">07.05.2017</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center">7:45 - 9:20</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">9:30 - 11:05</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">11:15 - 12:50</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">13:10 - 14:45</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">14:55 - 16:30</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">16:40 - 18:15</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+    </tbody>
+
+
+
+
+
+
+    <!--
+      <tbody>
+        <tr>
+            <td class="text-center">7:45 - 9:20</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td><div class="pair lecture"><p>*ОРО</p><p>Лк 210и</p></div></td>
+            <td class="timetd">&nbsp;</td>
+            <td><div class="pair laboratory"><p>АВпЗ</p><p>Лб 339</p></div></td>
+            <td><div class="pair practice"><p>*IССп</p><p>Пз 304и</p></div></td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">9:30 - 11:05</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td><div class="pair lecture"><p>*ОРО</p><p>Лк 210и</p></div></td>
+            <td><div class="pair practice"><p>OJava</p><p>Пз 365</p></div></td>
+            <td><div class="pair laboratory"><p>АВпЗ</p><p>Лб 339</p></div></td>
+            <td class="multiple"><div class="pair practice"><p>*IССп</p><p>Пз 304и</p></div><br /><div class="pair lecture"><p>*IССп</p><p>Пз 304и</p></div></td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">11:15 - 12:50</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td><div class="pair lecture"><p>*МСП</p><p>Лк 207и</p></div></td>
+            <td><div class="pair practice"><p>Ек & Б</p><p>Пз 207и</p></div></td>
+            <td><div class="pair lecture"><p>ОС</p><p>Лк 106и</p></div></td>
+            <td><div class="pair laboratory"><p>*ТС</p><p>Лб 339</p></div></td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">13:10 - 14:45</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="multiple"><div class="pair practice"><p>*МСП</p><p>Пз 205и</p></div><br /><div class="pair practice"><p>*МСП</p><p>Пз 205и</p></div></td>
+            <td class="timetd">&nbsp;</td>
+            <td><div class="pair practice"><p>ФВх</p><p>Пз спорт2</p></div></td>
+            <td><div class="pair laboratory"><p>*ТС</p><p>Лб 339</p></div></td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">14:55 - 16:30</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="text-center">16:40 - 18:15</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+            <td class="timetd">&nbsp;</td>
+        </tr>
+    </tbody>  
+        -->
+</table>

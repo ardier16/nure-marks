@@ -100,11 +100,13 @@ textarea {
 .rate {
     color: white;
     border-radius: 3pt;
-    font-size: 11pt;
+    font-size: 12pt;
     text-align: center;
     font-family: "Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Hiragino Kaku Gothic Pro",Meiryo,"Malgun Gothic",sans-serif;
     padding: 5px;
     max-width: 70px;
+    height: 34px;
+    min-width: 60px;
 }
 
 .btn-default {
@@ -140,4 +142,79 @@ textarea {
 
 .login-form input {
     margin-top: 1%;
+}
+
+.paid {
+    background-color: lightcyan;
+}
+
+.me {
+    background-color: lightblue;
+    font-weight: bold;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    vertical-align: middle;
+}
+
+.table > thead {
+    background-color: rgb(34, 34, 34);
+    color: #c7c7c7;
+}
+
+.history {
+    width: 50%;
+    text-align:center;
+}
+
+.timetd {
+    height: 86px;
+}
+
+.pair {
+    cursor: pointer;
+    font-size: 11pt;
+    border-style: solid;
+    border-radius: 4px;
+    height: 70px;
+    width: 100%;
+    border-width: 1px;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 0px;
+    padding: 10% 0%;
+    font-family: sans-serif;
+}
+
+.pair > p {
+    margin-bottom: 3px;
+}
+
+.lecture {
+    background-color: #ffe778;
+}
+
+.laboratory {
+    background-color: #e4bef5;
+}
+
+.practice {
+    background-color: #ccf997;
+}
+
+.exam {
+    background-color: #f9a099;
+}
+
+.consultation {
+    background-color: #c1e9ef;
+}
+
+.timetable > tbody > tr > td {
+    max-height: 90px;
+    overflow: auto;
+}
+
+.multiple {
+    display: list-item;
 }

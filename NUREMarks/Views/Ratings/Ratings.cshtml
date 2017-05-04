@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<StudentData>
+
+@{
     ViewData["Title"] = ViewData["Department"] + ", " + ViewData["Course"] + " курс";
     int i = 1;
 
@@ -14,18 +16,28 @@
     <thead>
         <tr>
             <th>№</th>
-            <th>П.І.Б.</th>
-            <th>Група</th>
+            <th>Имя студента</th>
+            <th>Группа</th>
             <th>Рейтинг</th>
-            <th>Додаткова інформація</th>
+            <th>Дополнительная информация</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var p in Model)
-            {
-            <tr>
+        {
+            <tr @(ViewBag.Paid >= i && p.Rating > 0 ? "class=paid" : "")>
+            
                 <td>@(i++)</td>
-                <td>@p.Name</td>
+                @{
+                    if (User.IsInRole("admin"))
+                    {
+                        <td><a asp-controller="Profile" asp-action="Student" asp-route-id="@p.Id">@p.Name</a></td>
+                    }
+                    else
+                    {
+                        <td>@p.Name</td>
+                    }
+                }
                 <td>@p.Group</td>
                 <td>
                     <div class="rate">@p.Rating</div>

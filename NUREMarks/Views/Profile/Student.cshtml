@@ -1,0 +1,92 @@
+﻿@model List<MarkInfo>
+
+@{
+    ViewData["Title"] = "Студент";
+    int i = 1;
+}
+<div style="width: 75%; display: inline-block">
+    <h3 class="text-center">Информация</h3><br />
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <h4>Имя: <b>@ViewData["name"]</b></h4>
+    <h4>Курс: @ViewData["course"]</h4>
+    <h4>Группа: @ViewData["group"]</h4>
+    <div style="display: inline-block;">
+        <div style="display: inline-block;">
+            <h4>Текущий рейтинг:</h4>
+        </div>
+        <div style="display: inline-block;" class="rate">@ViewData["rating"]</div>
+        <div style="display: inline-block;"><i>(@ViewData["uni-stat"] по университету, @ViewData["dep-stat"] по потоку)</i></div>
+    </div>
+    <div>
+        <h3>История рейтингов</h3>
+
+        <table class="table history">
+            <tbody>
+
+                @foreach (var item in ViewBag.RatingsHistory)
+            {
+                    <tr>
+                        <td><i>@item.Semester</i></td>
+                        <td><div class="rate">@item.RatingValue</div></td>
+
+                        @if (item.Delta != null && item.Delta > 0)
+                {
+                            <td class="text-success">+@item.Delta</td>
+                        }
+                        else if (item.Delta < 0)
+                        {
+                            <td class="text-danger">@item.Delta</td>
+                        }
+                        else
+                        {
+                            <td>-</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <h2 class="text-center">Оценки</h2>
+    <br />
+    @if (ViewData["MarksStatus"] != null)
+    {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Успех!</strong> @ViewData["MarksStatus"]
+        </div>
+    }
+    
+    <table class="table ratings-table">
+        <thead>
+            <tr>
+                <th class="text-center">№</th>
+                <th class="text-center">Семестр</th>
+                <th class="text-center">Предмет</th>
+                <th class="text-center">Преподаватель</th>
+                <th class="text-center">Оценка</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+                {
+                <tr>
+                    <td class="text-center">@(i++)</td>
+                    <td class="text-center">@p.Semester</td>
+                    <td class="text-center"><abbr title="@p.SubjectName">@p.SubjectAbbreviation</abbr></td>
+                    <td class="text-center">@p.TeacherName</td>
+                    <td><div class="mark rate">@p.MarkValue</div></td>
+                    <td class="text-center"><a class="btn btn-warning" asp-controller="Marks" asp-action="Edit" asp-route-MarkId="@p.MarkId">Изменить</a></td>
+                    <td><a class="btn btn-danger" asp-controller="Marks" asp-action="Delete" asp-route-MarkId="@p.MarkId">Удалить</a></td>
+                </tr>
+            }
+            <tr>
+                <td class="text-center">@(i++)</td>
+                <td class="text-center"><a class="btn btn-success" asp-controller="Marks" asp-action="Add" asp-route-studentId="@ViewData["id"]">Добавить</a></td>
+                <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
