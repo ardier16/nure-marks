@@ -92,9 +92,43 @@ namespace NUREMarks.Models
             AddSubjects(context);
             AddMarks(context);
 
+            /*
+            var list = context.Ratings.ToList();
 
+            List<Rating> rlist = new List<Rating>();
 
+            for (int i = 0; i < list.Count; i++)
+            {
+                rlist.Add(new Rating
+                {
+                    StudentId = list[i].StudentId,
+                    SemesterId = 2,
+                    Value = list[i].Value == 0 ? 0 : RandomValue((int)list[i].Value),
+                    Bonus = 0,
+                    Note = list[i].Note
+                });
 
+                rlist.Add(new Rating
+                {
+                    StudentId = list[i].StudentId,
+                    SemesterId = 3,
+                    Value = list[i].Value == 0 ? 0 : RandomValue((int)list[i].Value),
+                    Bonus = 0,
+                    Note = list[i].Note
+                });
+
+                rlist.Add(new Rating
+                {
+                    StudentId = list[i].StudentId,
+                    SemesterId = 5,
+                    Value = list[i].Value == 0 ? 0 : RandomValue((int)list[i].Value),
+                    Bonus = 0,
+                    Note = list[i].Note
+                });
+            }
+
+            context.Ratings.AddRange(rlist);
+            context.SaveChanges();
             /*
             var em = context.Users.ToList().GroupBy(u => u.Email).Where(r => r.Count() > 1).Select(s => s.Key).ToList();
 
@@ -170,6 +204,18 @@ namespace NUREMarks.Models
 
         }
 
+        public static double RandomValue(int r)
+        {
+            Random rand = new Random();
+            double res = 0;
+
+            while (res > 100 || res < 60)
+            {
+                res = rand.Next(r - 30, r + 30);
+            }
+
+            return res;
+        }
 
         public static void AddSubjects(MarksContext db)
         {

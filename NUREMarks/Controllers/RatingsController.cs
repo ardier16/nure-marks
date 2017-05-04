@@ -33,37 +33,111 @@ namespace NUREMarks.Controllers
             ViewData["Type"] = group.DepShort.Last() == 'у' ? 
                                 "з прискореним терміном навчання" : "";
 
-            return View(from r in db.Ratings
-                        join st in db.Students on r.StudentId equals st.Id
-                        join g in db.Groups on st.GroupId equals g.Id
-                        where g.DepShort.Equals(dep) && g.Course.Equals(course)
-                        orderby r.Value descending, r.Note descending, g.Name, st.Name
-                        select new StudentData
-                        {
-                            Name = st.Name,
-                            Group = g.Name,
-                            Rating = r.Value,
-                            Info = r.Note
-                        }
-                        );
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.DepShort.Equals(dep) && g.Course.Equals(course) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }).ToList();
+
+            ViewBag.Paid = (int) Math.Round(data.Where(d => d.Info != "контракт").Count() * 0.4);
+
+
+            return View(data);
         }
 
         [HttpGet]
         public IActionResult Top100()
         {
-            //return View(new PDFParser(path).Students);
             return View((from r in db.Ratings
-                        join st in db.Students on r.StudentId equals st.Id
-                        join g in db.Groups on st.GroupId equals g.Id
-                        orderby r.Value descending, r.Note descending, g.Name, st.Name
-                        select new StudentData
-                        {
-                            Name = st.Name,
-                            Group = g.Name,
-                            Rating = r.Value,
-                            Info = r.Note
-                        }
+                         join st in db.Students on r.StudentId equals st.Id
+                         join g in db.Groups on st.GroupId equals g.Id
+                         where r.SemesterId.Equals(1)
+                         orderby r.Value descending, r.Note descending, g.Name, st.Name
+                         select new StudentData
+                         {
+                             Id = st.Id,
+                             Name = st.Name,
+                             Group = g.Name,
+                             Rating = r.Value,
+                             Info = r.Note
+                         }
                         ).Take(100));
+        }
+
+        [HttpGet]
+        public IActionResult GroupStat(int id)
+        {
+            int groupId = db.Students.Where(s => s.Id.Equals(id)).First().GroupId;
+            ViewBag.Id = id;
+
+            return View((from r in db.Ratings
+                         join st in db.Students on r.StudentId equals st.Id
+                         join g in db.Groups on st.GroupId equals g.Id
+                         where g.Id.Equals(groupId) && r.SemesterId.Equals(1)
+                         orderby r.Value descending, st.Name
+                         select new StudentData
+                         {
+                             Id = st.Id,
+                             Name = st.Name,
+                             Group = g.Name,
+                             Rating = r.Value,
+                             Info = r.Note
+                         }
+                        ).ToList());
+        }
+
+        [HttpGet]
+        public IActionResult FacultyStat(int id)
+        {
+            ViewBag.Id = id;
+            int groupId = db.Students.Where(s => s.Id.Equals(id)).First().GroupId;
+            string facShort = db.Groups.Where(gr => gr.Id.Equals(groupId)).First().FacultyShort;
+
+            return View((from r in db.Ratings
+                         join st in db.Students on r.StudentId equals st.Id
+                         join g in db.Groups on st.GroupId equals g.Id
+                         where g.FacultyShort.Equals(facShort) && r.SemesterId.Equals(1)
+                         orderby r.Value descending, r.Note descending, g.Name, st.Name
+                         select new StudentData
+                         {
+                             Id = st.Id,
+                             Name = st.Name,
+                             Group = g.Name,
+                             Rating = r.Value,
+                             Info = r.Note
+                         }
+                        ).ToList());
+        }
+
+        [HttpGet]
+        public IActionResult SpecialityStat(int id)
+        {
+            ViewBag.Id = id;
+            int groupId = db.Students.Where(s => s.Id.Equals(id)).First().GroupId;
+            string spec = db.Groups.Where(gr => gr.Id.Equals(groupId)).First().DepShort;
+
+            return View((from r in db.Ratings
+                         join st in db.Students on r.StudentId equals st.Id
+                         join g in db.Groups on st.GroupId equals g.Id
+                         where g.DepShort.Equals(spec) && r.SemesterId.Equals(1)
+                         orderby r.Value descending, r.Note descending, g.Name, st.Name
+                         select new StudentData
+                         {
+                             Id = st.Id,
+                             Name = st.Name,
+                             Group = g.Name,
+                             Rating = r.Value,
+                             Info = r.Note
+                         }
+                        ).ToList());
         }
 
         [HttpGet]
@@ -77,18 +151,19 @@ namespace NUREMarks.Controllers
         {
             ViewData["SearchName"] = name;
 
-            return View(from students in db.Students
+            return View((from students in db.Students
                         join ratings in db.Ratings on students.Id equals ratings.StudentId
                         join groups in db.Groups on students.GroupId equals groups.Id
-                        where students.Name.ToLower().Contains(name.ToLower())
-                        orderby ratings.Value descending, ratings.Note descending, groups.Name, students.Name
+                        where students.Name.ToLower().Contains(name.ToLower()) && ratings.SemesterId.Equals(1)
+                         orderby ratings.Value descending, ratings.Note descending, groups.Name, students.Name
                         select new StudentData
                         {
+                            Id = students.Id,
                             Name = students.Name,
                             Group = groups.Name,
                             Rating = ratings.Value,
                             Info = ratings.Note
-                        });
+                        }).ToList());
         }
     }
 }

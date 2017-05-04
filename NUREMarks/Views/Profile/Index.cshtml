@@ -11,46 +11,69 @@
     <h4>E-Mail: <i>@ViewData["email"]</i></h4>
     <h4>Курс: @ViewData["course"]</h4>
     <h4>Группа: @ViewData["group"]</h4>
-    <div style="
-    display: inline-block;
-">
-        <div style="
-    display: inline-block;
-"><h4>Рейтинг:</h4></div>
-        <div style="
-    display: inline-block;
-" class="rate">@ViewData["rating"]</div>
-        <div style="
-    display: inline-block;
-"><i>(@ViewData["uni-stat"] по университету, @ViewData["dep-stat"] по потоку)</i></div>
+    <div style="display: inline-block;">
+        <div style="display: inline-block;">
+            <h4>Текущий рейтинг:</h4>
+        </div>
+        <div style="display: inline-block;" class="rate">@ViewData["rating"]</div>
+        <div style="display: inline-block;"><i>(@ViewData["uni-stat"] по университету, @ViewData["dep-stat"] по потоку)</i></div>
     </div>
-    <br />
-    <h2 class="text-center">Оценки</h2>
-    <br />
+    <div>
+        <h3>История рейтингов</h3>
 
-    <table class="table ratings-table">
-        <thead>
-            <tr>
-                <th>№</th>
-                <th>Семестр</th>
-                <th>Предмет</th>
-                <th>Преподаватель</th>
-                <th>Оценка</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var p in Model)
+        <table class="table history">
+            <tbody>
+
+            @foreach (var item in ViewBag.RatingsHistory)
             {
                 <tr>
-                    <td>@(i++)</td>
-                    <td>@p.Semester</td>
-                    <td><abbr title="@p.SubjectName">@p.SubjectAbbreviation</abbr></td>
-                    <td>@p.TeacherName</td>
-                    <td><div class="mark rate">@p.MarkValue</div></td>
+                    <td><i>@item.Semester</i></td>
+                    <td><div class="rate">@item.RatingValue</div></td>
+
+                    @if (item.Delta != null && item.Delta > 0)
+                {
+                        <td class="text-success">+@item.Delta</td>
+                    }
+                    else if (item.Delta < 0)
+                    {
+                        <td class="text-danger">@item.Delta</td>
+                    }
+                    else
+                    {
+                        <td>-</td>
+                    }
                 </tr>
             }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        </div>
+        <br />
+<h2 class="text-center">Оценки</h2>
+<br />
+
+<table class="table ratings-table">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Семестр</th>
+            <th>Предмет</th>
+            <th>Преподаватель</th>
+            <th>Оценка</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+            {
+            <tr>
+                <td>@(i++)</td>
+                <td>@p.Semester</td>
+                <td><abbr title="@p.SubjectName">@p.SubjectAbbreviation</abbr></td>
+                <td>@p.TeacherName</td>
+                <td><div class="mark rate">@p.MarkValue</div></td>
+            </tr>
+        }
+    </tbody>
+</table>
 </div>
 <div class="well" style="
     vertical-align: top;
@@ -64,6 +87,10 @@
         <li class="active"><a style="background-color: #222" href="#"><i class="fa fa-home fa-fw"></i>Профиль</a></li>
         <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Profile" asp-action="ChangePassword" class="btn-bracketed">Изменить пароль</a></li>
         <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Ratings" asp-action="FacultiesList" class="btn-bracketed">Рейтинги</a></li>
-        <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Ratings" asp-action="Top100" class="btn-bracketed">Статистика</a></li>
+        <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Ratings" asp-action="GroupStat" asp-route-id="@ViewData["id"]" class="btn-bracketed">Статистика по группе</a></li>
+        <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Ratings" asp-action="SpecialityStat" asp-route-id="@ViewData["id"]" class="btn-bracketed">Статистика по специальности</a></li>
+        <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Ratings" asp-action="FacultyStat" asp-route-id="@ViewData["id"]" class="btn-bracketed">Статистика по факультету</a></li>
+        <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Ratings" asp-action="Top100" class="btn-bracketed">Статистика по университету</a></li>
+        <li><a style="background-color: rgba(34, 34, 34, 0.08); color: #222" asp-controller="Profile" asp-action="TimeTable" asp-route-group="@ViewData["group"]" class="btn-bracketed">Расписание</a></li>
     </ul>
 </div>

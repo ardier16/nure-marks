@@ -102,6 +102,20 @@ window.onload = function () {
     for (var i = 0; i < marks.length; i++) {
         marks[i].style.backgroundColor = SetMarkColor(marks[i].innerText);
     }
+
+    if ($(".me")[0])
+    {
+        var id = $("tr.me")[0].dataset.id;
+
+        if (id > 3)
+        {
+            id -= 3;
+        }
+
+        $('html, body').animate({
+            scrollTop: $("tr[data-id='" + id + "']").offset().top
+        }, 200);
+    }
 };
 
 
@@ -118,4 +132,71 @@ $('#search-button').click(function (e) {
 
 function showSearchResults() {
     window.location.href = '/Ratings/Search?name=' + $("#search-field").val();
+}
+
+
+function setTimeTable() {
+
+    if ($("#htmlText")[0])
+    {
+        var obj = JSON.parse($("#htmlText")[0].value);
+
+        for (var i = 0; i < obj.events.length; i++) {
+            var number = obj.events[i].number_pair;
+            var day = new Date(obj.events[i].start_time * 1000).getDay();
+            var type, typeClass;
+
+            switch (obj.events[i].type)
+            {
+                case 0:
+                    type = "Лк";
+                    typeClass = "lecture";
+                    break;
+                case 10:
+                    type = "Пз";
+                    typeClass = "practice";
+                    break;
+                case 21:
+                    type = "Лб";
+                    typeClass = "laboratory";
+                    break;
+            }
+
+            var subject = findSubject(obj, obj.events[i].subject_id);
+            var auditory = obj.events[i].auditory;
+
+            var tr = $("tr")[number];
+            var td = tr.children[day];
+
+            td.className = "";
+
+            var pairInfo = '<div class="pair ' + typeClass +
+                '"><p>' + subject + '</p><p>' + type + ' ' + auditory + '</p></div>';
+
+            if (td.innerHTML != "&nbsp;")
+            {
+                td.className = "multiple";
+                td.innerHTML += '<br />' + pairInfo;
+            }
+            else
+            {
+                td.innerHTML = pairInfo;
+            }
+
+
+            
+        }
+    }
+    
+}
+
+function findSubject(json, id) {
+    for (var i = 0; i < json.subjects.length; i++) {
+        if (json.subjects[i].id == id)
+            return json.subjects[i].brief;
+    }
+}
+
+document.ready = function () {
+    setTimeTable();
 }

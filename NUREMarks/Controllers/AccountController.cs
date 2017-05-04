@@ -22,21 +22,17 @@ namespace NUREMarks.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
         private readonly string _externalCookieScheme;
-        MarksContext db;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IOptions<IdentityCookieOptions> identityCookieOptions,
-            ILoggerFactory loggerFactory,
-            MarksContext context)
+            ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _logger = loggerFactory.CreateLogger<AccountController>();
-
-            db = context;
         }
 
         //
@@ -59,31 +55,6 @@ namespace NUREMarks.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            var students = db.Students.ToList();
-            var users = db.Users.ToList();
-
-            for (int i = 0; i < 0; i++)
-            {
-                string email = EmailGenerator.GenerateNureEmail(students[i].Name);
-
-
-                if (!users.Exists(u => u.Email.Equals(email)))
-                {
-                    var user = new User
-                    {
-                        UserName = email,
-                        Email = email,
-                        StudentId = students[i].Id,
-                        Name = students[i].Name.Split(' ')[1],
-                        EmailConfirmed = true
-                    };
-
-                    var result = await _userManager.CreateAsync(user, "Qwerty123-");
-                }
-
-            }
-
-
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {

@@ -13,6 +13,7 @@ using NUREMarks.Data;
 using NUREMarks.Models;
 using NUREMarks.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 namespace NUREMarks
 {
@@ -103,7 +104,80 @@ namespace NUREMarks
             });
 
             SeedData.Initialize(app.ApplicationServices);
+            RolesInitialize(app.ApplicationServices).Wait();
+            AddRoles(app.ApplicationServices).Wait();
+        }
 
+
+        public async Task RolesInitialize(IServiceProvider serviceProvider)
+        {
+            RoleManager<IdentityRole> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            if (await roleManager.FindByNameAsync("admin") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("admin"));
+            }
+            if (await roleManager.FindByNameAsync("student") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("student"));
+            }
+        }
+
+        public async Task AddRoles(IServiceProvider serviceProvider)
+        {
+            UserManager<User> userManager =
+                serviceProvider.GetRequiredService<UserManager<User>>();
+            var context = serviceProvider.GetService<MarksContext>();
+            var users = context.Users.ToList();
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                if (users[i].Roles.Count == 0)
+                {
+                    await userManager.AddToRoleAsync(users[i], "student");
+                }
+            }
+
+            if (!users.Exists(u => u.Email.Equals("ardier16@gmail.com")))
+            {
+                var user = new User
+                {
+                    UserName = "ardier16@gmail.com",
+                    Email = "ardier16@gmail.com",
+                    Name = "Администратор",
+                    StudentId = null,
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(user, "111111");
+
+                await userManager.AddToRoleAsync(user, "admin");
+            }
+
+
+            /*
+            for (int i = 0; i < 0; i++)
+            {
+                string email = EmailGenerator.GenerateNureEmail(students[i].Name);
+
+
+                if (!users.Exists(u => u.Email.Equals(email)))
+                {
+                    var user = new User
+                    {
+                        UserName = email,
+                        Email = email,
+                        StudentId = students[i].Id,
+                        Name = students[i].Name.Split(' ')[1],
+                        EmailConfirmed = true
+                    };
+
+                    var result = await _userManager.CreateAsync(user, "Qwerty123-");
+                }
+
+            }
+            */
         }
     }
 }

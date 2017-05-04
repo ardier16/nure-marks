@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<StudentData>
+
+@{
     ViewData["Title"] = "Результаты поиска студентов по запросу " + ViewData["SearchName"];
     int i = 1;
 
@@ -7,33 +9,8 @@
 <div id="ratings-header">
     <h3>Результаты поиска студентов по запросу @ViewData["SearchName"]</h3><br />
 </div>
-<table class="table ratings-table">
-    <thead>
-        <tr>
-            <th>№</th>
-            <th>П.І.Б.</th>
-            <th>Група</th>
-            <th>Рейтинг</th>
-            <th>Додаткова інформація</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var p in Model)
-            {
-            <tr>
-                <td>@(i++)</td>
-                <td>@p.Name</td>
-                <td>@p.Group</td>
-                <td>
-                    <div class="rate">@p.Rating</div>
-                </td>
-                <td>@p.Info</td>
-            </tr>
-        }
-    </tbody>
-</table>
 
-@if (i == 1)
+@if (Model.Count == 0)
 {
     <h2>По вашему запросу не найдено ни одного студента</h2>
     <h3>Попробуйте выполнить поиск снова</h3>
@@ -45,3 +22,42 @@
     </div>
 
 }
+else
+{
+    <table class="table ratings-table table-hover">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Имя студента</th>
+                <th>Группа</th>
+                <th>Рейтинг</th>
+                <th>Дополнительная информация</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@(i++)</td>
+                    @{
+                        if (User.IsInRole("admin"))
+                        {
+                            <td><a asp-controller="Profile" asp-action="Student" asp-route-id="@p.Id">@p.Name</a></td>
+                        }
+                        else
+                        {
+                            <td>@p.Name</td>
+                        }
+                    }
+                    <td>@p.Group</td>
+                    <td>
+                        <div class="rate">@p.Rating</div>
+                    </td>
+                    <td>@p.Info</td>
+                </tr>
+                        }
+        </tbody>
+    </table>
+
+                        }
+

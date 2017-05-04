@@ -7,6 +7,7 @@ namespace NUREMarks.Models
 {
     public class MarkInfo
     {
+        public int MarkId { get; set; }
         public string StudentName { get; set; }
         public string Semester { get; set; }
         public string TeacherName { get; set; }
