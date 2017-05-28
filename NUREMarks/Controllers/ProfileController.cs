@@ -182,6 +182,100 @@ namespace NUREMarks.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult Teacher(string teacherName)
+        {
+            if (SignInManager.IsSignedIn(User))
+            {
+                if (!User.IsInRole("admin"))
+                {
+                    return RedirectToAction(nameof(HomeController.About), "Home/About");
+                }
+
+                var data = (from s in db.Subjects
+                            join m in db.Marks on s.Id equals m.SubjectId
+                            join st in db.Students on m.StudentId equals st.Id
+                            join g in db.Groups on st.GroupId equals g.Id
+                            where s.Teacher.Equals(teacherName)
+                            group g.Name by new { s.Teacher, s.Name } into gr
+                            select new TeacherInfo
+                            {
+                                Teacher = gr.Key.Teacher,
+                                Subject = gr.Key.Name,
+                                Groups = gr.ToList()
+                            }).ToList();
+
+                foreach (var item in data)
+                {
+                    item.Groups = item.Groups.Distinct().ToList();
+                }
+
+                return View(data);
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Group(string GroupName, string SubName, string message = null)
+        {
+            if (SignInManager.IsSignedIn(User))
+            {
+                if (!User.IsInRole("admin"))
+                {
+                    return RedirectToAction(nameof(HomeController.About), "Home/About");
+                }
+
+                if (message != null)
+                {
+                    ViewData["MarksStatus"] = message;
+                }
+
+                Subject sb = db.Subjects.Where(s => s.Name.Equals(SubName)).First();
+                Semester sem = db.Semesters.Where(s => s.Season.Equals("Весна") && s.Year.Equals(2017)).First();
+
+                var data = (from m in db.Marks
+                            join st in db.Students on m.StudentId equals st.Id
+                            join g in db.Groups on st.GroupId equals g.Id
+                            where g.Name.Equals(GroupName) && m.SemesterId.Equals(sem.Id)
+                            select new MarkInfo
+                            {
+                                MarkId = m.Id,
+                                StudentId = st.Id,
+                                StudentName = st.Name,
+                                SubjectId = sb.Id,
+                                SubjectName = sb.Name,
+                                SubjectAbbreviation = sb.Abbreviation,
+                                Semester = sem.Season + " " + sem.Year,
+                                TeacherName = sb.Teacher,
+                                MarkValue = m.Value
+                            }).ToList();
+
+                data.AddRange((from st in db.Students
+                               join g in db.Groups on st.GroupId equals g.Id
+                               where g.Name.Equals(GroupName) 
+                               && db.Marks.Where(m => m.StudentId.Equals(st.Id) && m.SemesterId.Equals(sem.Id)).Count() == 0
+                               select new MarkInfo
+                               {
+                                   MarkId = null,
+                                   StudentId = st.Id,
+                                   StudentName = st.Name,
+                                   SubjectId = sb.Id,
+                                   SubjectName = sb.Name,
+                                   SubjectAbbreviation = sb.Abbreviation,
+                                   Semester = sem.Season + " " + sem.Year,
+                                   TeacherName = sb.Teacher,
+                                   MarkValue = null
+                               }).ToList());
+
+                data = data.OrderBy(d => d.StudentName).ToList();
+
+                return View(data);
+            }
+
+            return View();
+        }
+
         //
         // GET: /Manage/ChangePassword
         [HttpGet]

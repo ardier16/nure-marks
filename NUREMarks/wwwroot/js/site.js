@@ -99,7 +99,7 @@ window.onload = function () {
         rates[i].style.backgroundColor = SetRatingColor(rates[i].innerText.split(',')[0]);
     }
 
-    for (var i = 0; i < marks.length; i++) {
+    for (i = 0; i < marks.length; i++) {
         marks[i].style.backgroundColor = SetMarkColor(marks[i].innerText);
     }
 
@@ -120,7 +120,7 @@ window.onload = function () {
 
 
 $('#search-field').keyup(function (e) {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
         showSearchResults();
     }
 });
@@ -173,7 +173,7 @@ function setTimeTable() {
             var pairInfo = '<div class="pair ' + typeClass +
                 '"><p>' + subject + '</p><p>' + type + ' ' + auditory + '</p></div>';
 
-            if (td.innerHTML != "&nbsp;")
+            if (td.innerHTML !== "&nbsp;")
             {
                 td.className = "multiple";
                 td.innerHTML += '<br />' + pairInfo;
@@ -192,7 +192,7 @@ function setTimeTable() {
 
 function findSubject(json, id) {
     for (var i = 0; i < json.subjects.length; i++) {
-        if (json.subjects[i].id == id)
+        if (json.subjects[i].id === id)
             return json.subjects[i].brief;
     }
 }

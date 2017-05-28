@@ -76,7 +76,7 @@
                     <td class="text-center">@(i++)</td>
                     <td class="text-center">@p.Semester</td>
                     <td class="text-center"><abbr title="@p.SubjectName">@p.SubjectAbbreviation</abbr></td>
-                    <td class="text-center">@p.TeacherName</td>
+                    <td class="text-center"><a asp-controller="Profile" asp-action="Teacher" asp-route-teacherName="@p.TeacherName">@p.TeacherName</a></td>
                     <td><div class="mark rate">@p.MarkValue</div></td>
                     <td class="text-center"><a class="btn btn-warning" asp-controller="Marks" asp-action="Edit" asp-route-MarkId="@p.MarkId">Изменить</a></td>
                     <td><a class="btn btn-danger" asp-controller="Marks" asp-action="Delete" asp-route-MarkId="@p.MarkId">Удалить</a></td>

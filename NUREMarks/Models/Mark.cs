@@ -1,4 +1,7 @@
-﻿namespace NUREMarks.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace NUREMarks.Models
 {
     public class Mark
     {
@@ -13,5 +16,6 @@
 
         public int SemesterId { get; set; }
         public Semester Semester { get; set; }
-    }
+
+    }   
 }

@@ -1,0 +1,33 @@
+﻿@model List<TeacherInfo>
+
+@{
+    ViewData["Title"] = "Группы преподавателя";
+    int i = 1;
+}
+<h2 class="text-center">Группы преподавателя @Model[0].Teacher</h2>
+<br />
+<table class="table ratings-table">
+    <thead>
+        <tr>
+            <th class="text-center">№</th>
+            <th class="text-center">Преподаватель</th>
+            <th class="text-center">Предмет</th>
+            <th class="text-center">Группа</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            @foreach (var g in p.Groups)
+            {
+                <tr>
+                    <td class="text-center">@(i++)</td>
+                    <td class="text-center">@p.Teacher</td>
+                    <td class="text-center">@p.Subject</td>
+                    <td class="text-center"><a class="btn btn-success" asp-controller="Profile" asp-action="Group" asp-route-GroupName="@g" asp-route-SubName="@p.Subject">@g</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
