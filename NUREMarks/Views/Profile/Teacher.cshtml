@@ -12,6 +12,7 @@
             <th class="text-center">№</th>
             <th class="text-center">Преподаватель</th>
             <th class="text-center">Предмет</th>
+            <th class="text-center">Семестр</th>
             <th class="text-center">Группа</th>
         </tr>
     </thead>
@@ -24,7 +25,8 @@
                     <td class="text-center">@(i++)</td>
                     <td class="text-center">@p.Teacher</td>
                     <td class="text-center">@p.Subject</td>
-                    <td class="text-center"><a class="btn btn-success" asp-controller="Profile" asp-action="Group" asp-route-GroupName="@g" asp-route-SubName="@p.Subject">@g</a></td>
+                    <td class="text-center">@p.Semester</td>
+                    <td class="text-center"><a class="btn btn-success" asp-controller="Profile" asp-action="Group" asp-route-GroupName="@g" asp-route-SubName="@p.Subject" asp-route-Semester="@p.Semester">@g</a></td>
                 </tr>
             }
         }

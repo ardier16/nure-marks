@@ -21,8 +21,6 @@ namespace NUREMarks.Controllers
         [HttpGet]
         public IActionResult Ratings(string dep, int course)
         {
-            //return View(new PDFParser(path).Students);
-
             Group group = (from g in db.Groups
                            where g.DepShort == dep && g.Course == course
                            select g).ToList().First();
@@ -30,9 +28,20 @@ namespace NUREMarks.Controllers
             ViewData["Department"] = group.Department;
             ViewData["Faculty"] = group.FacultyFull;
             ViewData["Course"] = group.Course;
-            ViewData["Type"] = group.DepShort.Last() == 'у' ? 
+            ViewData["Dep"] = group.DepShort;
+            ViewData["Type"] = group.DepShort.Last() == 'у' ?
                                 "з прискореним терміном навчання" : "";
 
+            List<StudentData> data = GetRatings(dep, course);
+
+            ViewBag.Paid = (int) Math.Round(data.Where(d => d.Info != "контракт").Count() * 0.4);
+
+
+            return View(data);
+        }
+
+        private List<StudentData> GetRatings(string dep, int course)
+        {
             List<StudentData> data = (from r in db.Ratings
                                       join st in db.Students on r.StudentId equals st.Id
                                       join g in db.Groups on st.GroupId equals g.Id
@@ -47,10 +56,7 @@ namespace NUREMarks.Controllers
                                           Info = r.Note
                                       }).ToList();
 
-            ViewBag.Paid = (int) Math.Round(data.Where(d => d.Info != "контракт").Count() * 0.4);
-
-
-            return View(data);
+            return data;
         }
 
         [HttpGet]
@@ -164,6 +170,22 @@ namespace NUREMarks.Controllers
                             Rating = ratings.Value,
                             Info = ratings.Note
                         }).ToList());
+        }
+
+        [HttpGet]
+        public IActionResult Calculate()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult SaveSpecialityDoc(string dep, int course)
+        {
+            List<StudentData> data = GetRatings(dep, course);
+            Services.DocSaver.CreateWordDoc("wwwroot/docs/Ratings.docx", data);
+            
+            return Redirect("/docs/Ratings.docx");
+
         }
     }
 }

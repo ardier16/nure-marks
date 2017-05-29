@@ -12,6 +12,7 @@
     <h4>Спеціальності "@ViewData["Department"]"</h4><br />
     <h4>Семестр: осінь 2016</h4><br />
 </div>
+<a class="btn btn-info" asp-controller="Ratings" asp-action="SaveSpecialityDoc" asp-route-dep="@ViewData["Dep"]" asp-route-course="@ViewData["Course"]" target="_blank">Сохранить в формате .DOCX</a>
 <table class="table ratings-table">
     <thead>
         <tr>
@@ -47,5 +48,4 @@
         }
     </tbody>
 </table>
-
 

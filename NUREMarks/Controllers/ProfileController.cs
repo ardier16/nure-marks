@@ -197,11 +197,13 @@ namespace NUREMarks.Controllers
                             join st in db.Students on m.StudentId equals st.Id
                             join g in db.Groups on st.GroupId equals g.Id
                             where s.Teacher.Equals(teacherName)
-                            group g.Name by new { s.Teacher, s.Name } into gr
+                            group g.Name by new { s.Teacher, s.Name, m.SemesterId } into gr
                             select new TeacherInfo
                             {
                                 Teacher = gr.Key.Teacher,
                                 Subject = gr.Key.Name,
+                                Semester = db.Semesters.Where(sem => sem.Id == gr.Key.SemesterId).First().Season + 
+                                    " " + db.Semesters.Where(sem => sem.Id == gr.Key.SemesterId).First().Year,
                                 Groups = gr.ToList()
                             }).ToList();
 
@@ -217,7 +219,7 @@ namespace NUREMarks.Controllers
         }
 
         [HttpGet]
-        public IActionResult Group(string GroupName, string SubName, string message = null)
+        public IActionResult Group(string GroupName, string SubName, string Semester, string message = null)
         {
             if (SignInManager.IsSignedIn(User))
             {
@@ -231,13 +233,16 @@ namespace NUREMarks.Controllers
                     ViewData["MarksStatus"] = message;
                 }
 
+                string season = Semester.Split(' ')[0];
+                int year = Int32.Parse(Semester.Split(' ')[1]);
+
                 Subject sb = db.Subjects.Where(s => s.Name.Equals(SubName)).First();
-                Semester sem = db.Semesters.Where(s => s.Season.Equals("Весна") && s.Year.Equals(2017)).First();
+                Semester sem = db.Semesters.Where(s => s.Season.Equals(season) && s.Year.Equals(year)).First();
 
                 var data = (from m in db.Marks
                             join st in db.Students on m.StudentId equals st.Id
                             join g in db.Groups on st.GroupId equals g.Id
-                            where g.Name.Equals(GroupName) && m.SemesterId.Equals(sem.Id)
+                            where g.Name.Equals(GroupName) && m.SemesterId.Equals(sem.Id) && m.SubjectId.Equals(sb.Id)
                             select new MarkInfo
                             {
                                 MarkId = m.Id,
@@ -254,7 +259,7 @@ namespace NUREMarks.Controllers
                 data.AddRange((from st in db.Students
                                join g in db.Groups on st.GroupId equals g.Id
                                where g.Name.Equals(GroupName) 
-                               && db.Marks.Where(m => m.StudentId.Equals(st.Id) && m.SemesterId.Equals(sem.Id)).Count() == 0
+                               && db.Marks.Where(m => m.StudentId.Equals(st.Id) && m.SemesterId.Equals(sem.Id) && m.SubjectId.Equals(sb.Id)).Count() == 0
                                select new MarkInfo
                                {
                                    MarkId = null,
@@ -269,6 +274,7 @@ namespace NUREMarks.Controllers
                                }).ToList());
 
                 data = data.OrderBy(d => d.StudentName).ToList();
+                ViewBag.SemesterId = sem.Id;
 
                 return View(data);
             }

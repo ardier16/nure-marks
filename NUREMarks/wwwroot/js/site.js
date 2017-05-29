@@ -36,7 +36,7 @@ function highlight(node) {
 			return;
 		case '3':
 			showDeps('third');
-			return;						
+			return;
 		case '4':
 			showDeps('fourth');
 			return;
@@ -47,7 +47,7 @@ function highlight(node) {
 			showDeps('sixth');
 			return;
 		default:
-			return;															
+			return;
 	}
 }
 
@@ -92,8 +92,8 @@ function SetMarkColor(Rating) {
 }
 
 window.onload = function () {
-    var rates = document.getElementsByClassName('rate');
-    var marks = document.getElementsByClassName('mark');
+    var rates = $('.rate');
+    var marks = $('.mark');
 
     for (var i = 0; i < rates.length; i++) {
         rates[i].style.backgroundColor = SetRatingColor(rates[i].innerText.split(',')[0]);
@@ -182,12 +182,9 @@ function setTimeTable() {
             {
                 td.innerHTML = pairInfo;
             }
-
-
-            
         }
     }
-    
+
 }
 
 function findSubject(json, id) {
@@ -199,4 +196,82 @@ function findSubject(json, id) {
 
 document.ready = function () {
     setTimeTable();
+}
+
+function calculateRating() {
+    var credits = $(".subject-input.credits");
+    var marks = $(".subject-input.mark-value");
+    var additional = +$(".subject-input.additional")[0].value;
+    var rating = 0;
+    var crSum = 0;
+
+    for (var i = 0; i < credits.length; i++) {
+        if (credits[i].parentElement.className.indexOf("last") == -1) {
+            crSum += +credits[i].value;
+            rating += credits[i].value * marks[i].value;
+        }
+    }
+
+    rating = 0.9 * rating / crSum + additional;
+
+    $(".calc-rating")[0].innerHTML = "Ваш рейтинг: <div class='rate subject-blocks'>" + Math.round(rating*100)/100 + "</div>";
+    $('.rate')[0].style.backgroundColor = SetRatingColor(rating)
+}
+
+$(".calculate-form")[0].onsubmit = function() {
+    calculateRating();
+    return false;
+}
+
+$(".last")[0].children[3].onfocus = function() {
+    addSubject();
+    var subBlocks = $(".subject");
+    setTimeout(function() { subBlocks[subBlocks.length - 2].children[3].focus() }, 30);
+}
+
+$(".subject-blocks")[0].onkeyup = function() {
+    drawMarksValues();
+}
+
+$(".subject-blocks")[0].onclick = function() {
+    drawMarksValues();
+}
+
+function drawMarksValues() {
+    var marks = $(".subject-input.mark-value");
+
+    for (var i = 0; i < marks.length - 1; i++) {
+        if (marks[i].value != "") {
+            marks[i].style.backgroundColor = SetMarkColor(marks[i].value);
+            marks[i].style.color = "white";
+        }
+    }
+}
+
+function deleteSubject(index) {
+    var subBlock = $(".subject-blocks")[0];
+    subBlock.children[index-1].remove();
+
+    for (var i = index - 1; i < subBlock.children.length; i++) {
+        subBlock.children[i].children[0].innerHTML = i + 1;
+    }
+}
+
+function addSubject() {
+    var subBlock = $(".subject-blocks")[0];
+    var count = subBlock.children.length;
+
+    var div = document.createElement('div');
+    div.className = "subject";
+    div.innerHTML = '<div class="subject-number">' + count + '</div>' +
+                     '<div class="subject-delete" onclick="deleteSubject(' + count + ')">x</div>' +
+                     '<p class="subject-name">Название</p>' +
+                     '<input type="text" class="subject-input name" maxlength="17" placeholder="Предмет">' +
+                     '<p class="subject-label">Кредиты</p>' +
+                     '<input type="number" class="subject-input credits" maxlength="0" min="0" max="6" step="0.5" placeholder="0-6" required checked>' +
+                     '<p class="subject-label">Оценка</p>' +
+                     '<input type="number" class="subject-input mark-value" maxlength="0" min="60" max="100" placeholder="60-100" required checked>';
+
+    subBlock.insertBefore(div, subBlock.children[count - 1]);
+    $(".subject-number")[count].innerHTML = count + 1;
 }

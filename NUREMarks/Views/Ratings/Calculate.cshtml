@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Расчёт рейтинга";
+}
+<h2 class="page-title">@ViewData["Title"]</h2>
+<br />
+<form class="calculate-form">
+    <div class="subject-blocks">
+        <div class="subject">
+            <div class="subject-number">1</div>
+            <div class="subject-delete" onclick="deleteSubject(1)">x</div>
+            <p class="subject-name">Название</p>
+            <input type="text" class="subject-input name" maxlength="17" placeholder="Предмет" autofocus>
+            <p class="subject-label">Кредиты</p>
+            <input type="number" class="subject-input credits" min="0" max="6" step="0.5" placeholder="0-6" required checked>
+            <p class="subject-label">Оценка</p>
+            <input type="number" class="subject-input mark-value" min="60" max="100" placeholder="60-100" required checked>
+        </div>
+        <div class="subject last">
+            <div class="subject-number">2</div>
+            <div class="subject-delete">x</div>
+            <p class="subject-name">Название</p>
+            <input type="text" class="subject-input name" maxlength="17" placeholder="Предмет">
+            <p class="subject-label">Кредиты</p>
+            <input type="number" class="subject-input credits" placeholder="0-6" disabled>
+            <p class="subject-label">Оценка</p>
+            <input type="number" class="subject-input mark-value" placeholder="60-100" disabled>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="text-center subject-blocks">
+        <p class="subject-label">Доп. баллы</p>
+        <input type="number" class="subject-input additional" min="0" max="10" placeholder="0-10" required checked><br /><br />
+        <button type="submit" class="btn btn-success calc-btn">Рассчитать</button><br /><br />
+        <div class="calc-rating subject-blocks"></div><br /><br />
+    </div>
+</form>

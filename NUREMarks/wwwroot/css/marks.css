@@ -218,3 +218,78 @@ textarea {
 .multiple {
     display: list-item;
 }
+
+.calculate-form {
+    font-size: 15pt;
+    text-align: center;
+}
+
+.subject-blocks {
+    display: inline-block;
+    text-align: center;
+}
+
+.subject {
+    border-style: solid;
+    width: 227px;
+    height: 259px;
+    border-radius: 16px;
+    background-color: #d9edf7;
+    border-width: 1px;
+    border-color: aquamarine;
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.subject-number {
+    background: #FF5722;
+    font-size: 20pt;
+    margin-left: 10px;
+    border-radius: 50%;
+    width: 17%;
+    color: blanchedalmond;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.subject-delete {
+    background: #ff3a3a;
+    color: white;
+    display: inline-block;
+    font-size: 20pt;
+    margin-left: 118px;
+    border-radius: 50%;
+    width: 17%;
+    cursor: pointer;
+}
+
+
+.subject-name {
+    margin-top: -33px;
+}
+
+.subject-label {
+    margin-top: 6px;
+}
+
+.subject-input {
+    text-align: center;
+}
+
+.subject-input.name {
+    margin-top: 6px;
+    max-width: 200px;
+    border-radius: 10px;
+}
+
+.subject-input.credits, .subject-input.mark-value, .subject-input.additional {
+    margin-top: -8px;
+    max-width: 86px;
+    border-radius: 44px;
+}
+
+.calc-btn {
+    font-size: 15pt;
+    margin-bottom: 10px;
+}

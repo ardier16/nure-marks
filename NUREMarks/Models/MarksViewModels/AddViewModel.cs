@@ -20,5 +20,9 @@ namespace NUREMarks.Models.MarksViewModels
         [Required]
         [DataType(DataType.Text)]
         public int StudentId { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        public int SemesterId { get; set; }
     }
 }

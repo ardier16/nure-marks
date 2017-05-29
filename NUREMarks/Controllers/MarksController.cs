@@ -32,11 +32,11 @@ namespace NUREMarks.Controllers
             string TeacherName = model.Subject.Split('(', ')')[1];
 
             Subject sub = db.Subjects.Where(s => s.Abbreviation.Equals(SubAbbr) && s.Teacher.Equals(TeacherName)).First();
-            Semester sem = db.Semesters.ToList()[1];
+            Semester sem = db.Semesters.Where(s => s.Id.Equals(model.SemesterId)).First();
 
             db.Marks.Add(new Mark
             {
-                Semester = sem,
+                SemesterId = model.SemesterId,
                 Subject = sub,
                 StudentId = model.StudentId,
                 Value = model.Value
@@ -56,15 +56,17 @@ namespace NUREMarks.Controllers
                 groupName = db.Groups.Where(g => g.Id.Equals(db.Students.Where
                     (st => st.Id.Equals(model.StudentId)).First().GroupId)).First().Name,
                 subName = sub.Name,
+                Semester = sem.Season + " " + sem.Year,
                 message = "Оценка успешно добавлена"
             });
         }
 
 
         [HttpGet]
-        public IActionResult Add(int studentId, int subjectId = 0)
+        public IActionResult Add(int studentId, int subjectId = 0, int semesterId = 0)
         {
             ViewBag.StudentId = studentId;
+            ViewBag.SemesterId = semesterId != 0 ? semesterId : 2;
 
             if (subjectId > 0)
             {
@@ -84,7 +86,8 @@ namespace NUREMarks.Controllers
         {
             Mark mark = db.Marks.Where(m => m.Id.Equals(model.MarkId)).First();
             mark.Value = model.Value;
-            
+            Semester sem = db.Semesters.Where(s => s.Id.Equals(mark.SemesterId)).First();
+
             db.SaveChanges();
 
             if (ViewBag.Redirect == "Student")
@@ -99,6 +102,7 @@ namespace NUREMarks.Controllers
                 groupName = db.Groups.Where(g => g.Id.Equals(db.Students.Where
                     (st => st.Id.Equals(mark.StudentId)).First().GroupId)).First().Name,
                 subName = db.Subjects.Where(s => s.Id == mark.SubjectId).First().Name,
+                Semester = sem.Season + " " + sem.Year,
                 message = "Оценка успешно изменена"
             });
         }
@@ -123,6 +127,7 @@ namespace NUREMarks.Controllers
         public IActionResult Delete(int MarkId, int redir = 0)
         {
             Mark mark = db.Marks.Where(m => m.Id.Equals(MarkId)).First();
+            Semester sem = db.Semesters.Where(s => s.Id.Equals(mark.SemesterId)).First();
             db.Marks.Remove(mark);
             db.SaveChanges();
 
@@ -132,6 +137,7 @@ namespace NUREMarks.Controllers
                     groupName = db.Groups.Where(g => g.Id.Equals(db.Students.Where
                         (st => st.Id.Equals(mark.StudentId)).First().GroupId)).First().Name,
                     subName = db.Subjects.Where(s => s.Id == mark.SubjectId).First().Name,
+                    Semester = sem.Season + " " + sem.Year,
                     message = "Оценка успешно удалена"
                 });
 
@@ -140,8 +146,6 @@ namespace NUREMarks.Controllers
                 id = mark.StudentId,
                 message = "Оценка успешно удалена"
             });
-
-
         }
     }
 }

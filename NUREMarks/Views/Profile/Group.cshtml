@@ -47,7 +47,7 @@
                 else
                 {
                     <td><div class="mark rate">нет</div></td>
-                    <td class="text-center"><a class="btn btn-success" asp-controller="Marks" asp-action="Add" asp-route-studentId="@p.StudentId" asp-route-subjectId="@p.SubjectId">Добавить</a></td>
+                    <td class="text-center"><a class="btn btn-success" asp-controller="Marks" asp-action="Add" asp-route-studentId="@p.StudentId" asp-route-subjectId="@p.SubjectId" asp-route-semesterId="@ViewBag.SemesterId">Добавить</a></td>
                     <td class="text-center"><a class="btn btn-warning disabled">Изменить</a></td>
                     <td><a class="btn btn-danger disabled">Удалить</a></td>
 
