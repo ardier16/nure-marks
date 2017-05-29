@@ -2,7 +2,7 @@
 
 namespace NUREMarks.Services
 {
-    static class EmailGenerator
+    static class StringTranslator
     {
         static Dictionary<char, string> dict = new Dictionary<char, string>
         {
@@ -54,6 +54,11 @@ namespace NUREMarks.Services
                    TranslateString(lastName) + "@nure.ua";
         }
 
+        public static string ConvertString(string source)
+        {
+            return TranslateString(source.ToLower()).ToUpper();
+        }
+
         public static string GetFirstLetter(char letter)
         {
             switch (letter)
@@ -79,7 +84,12 @@ namespace NUREMarks.Services
                     || source[i] == 'є'))
                     result += GetFirstLetter(source[i]);
                 else
-                    result += dict[source[i]];
+                {
+                    if (dict.ContainsKey(source[i]))
+                        result += dict[source[i]];
+                    else
+                        result += source[i];
+                }
             }
 
             return result;

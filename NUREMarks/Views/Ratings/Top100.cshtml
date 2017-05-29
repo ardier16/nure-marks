@@ -5,6 +5,11 @@
 }
 
 <h2 class="page-title">Топ 100 рейтингов ХНУРЭ</h2><br />
+<div>
+    <a class="btn btn-info big-btn" asp-controller="Ratings" asp-action="SaveTopDoc" target="_blank">Сохранить в формате .DOCX</a>
+    <a class="btn btn-success big-btn" asp-controller="Ratings" asp-action="SaveTopExcel" target="_blank">Сохранить в формате .EXCEL</a>
+    <a class="btn btn-danger big-btn" asp-controller="Ratings" asp-action="SaveTopPdf" target="_blank">Сохранить в формате .PDF</a>
+</div>
 <table class="table ratings-table table-hover">
     <thead>
         <tr>

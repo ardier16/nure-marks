@@ -2,12 +2,17 @@
 
 
 @{
-    ViewData["Title"] = "Статистика по факультету";
+    ViewData["Title"] = "Статистика по факультету " + ViewBag.Fac;
     int i = 1;
 
 }
 
-<h2 class="page-title">Статистика по факультету</h2><br />
+<h2 class="page-title">Статистика по факультету @ViewBag.Fac</h2><br />
+<div>
+    <a class="btn btn-info big-btn" asp-controller="Ratings" asp-action="SaveFacultyDoc" asp-route-fac="@ViewBag.Fac" target="_blank">Сохранить в формате .DOCX</a>
+    <a class="btn btn-success big-btn" asp-controller="Ratings" asp-action="SaveFacultyExcel" asp-route-fac="@ViewBag.Fac" target="_blank">Сохранить в формате .EXCEL</a>
+    <a class="btn btn-danger big-btn" asp-controller="Ratings" asp-action="SaveFacultyPdf" asp-route-fac="@ViewBag.Fac" target="_blank">Сохранить в формате .PDF</a>
+</div>
 <table class="table ratings-table table-hover">
     <thead>
         <tr>

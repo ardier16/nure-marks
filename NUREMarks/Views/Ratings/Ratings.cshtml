@@ -12,7 +12,11 @@
     <h4>Спеціальності "@ViewData["Department"]"</h4><br />
     <h4>Семестр: осінь 2016</h4><br />
 </div>
-<a class="btn btn-info" asp-controller="Ratings" asp-action="SaveSpecialityDoc" asp-route-dep="@ViewData["Dep"]" asp-route-course="@ViewData["Course"]" target="_blank">Сохранить в формате .DOCX</a>
+<div>
+    <a class="btn btn-info big-btn" asp-controller="Ratings" asp-action="SaveSpecialityDoc" asp-route-dep="@ViewData["Dep"]" asp-route-course="@ViewData["Course"]" target="_blank">Сохранить в формате .DOCX</a>
+    <a class="btn btn-success big-btn" asp-controller="Ratings" asp-action="SaveSpecialityExcel" asp-route-dep="@ViewData["Dep"]" asp-route-course="@ViewData["Course"]" target="_blank">Сохранить в формате .EXCEL</a>
+    <a class="btn btn-danger big-btn" asp-controller="Ratings" asp-action="SaveSpecialityPdf" asp-route-dep="@ViewData["Dep"]" asp-route-course="@ViewData["Course"]" target="_blank">Сохранить в формате .PDF</a>
+</div>
 <table class="table ratings-table">
     <thead>
         <tr>

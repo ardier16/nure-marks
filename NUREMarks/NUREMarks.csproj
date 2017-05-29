@@ -354,6 +354,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
+    <PackageReference Include="PdfRpt.Core" Version="1.0.2" />
     <PackageReference Include="Xfinium.Pdf.NetCore" Version="6.7.0" />
   </ItemGroup>
   <ItemGroup>

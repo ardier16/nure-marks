@@ -1,12 +1,17 @@
 ﻿@model List<StudentData>
 
 @{
-    ViewData["Title"] = "Статистика по специальности";
+    ViewData["Title"] = "Статистика по специальности " + ViewBag.Spec;
     int i = 1;
 
 }
 
 <h2 class="page-title">Статистика по специальности</h2><br />
+<div>
+    <a class="btn btn-info big-btn" asp-controller="Ratings" asp-action="SaveSpecDoc" asp-route-spec="@ViewBag.Spec" target="_blank">Сохранить в формате .DOCX</a>
+    <a class="btn btn-success big-btn" asp-controller="Ratings" asp-action="SaveSpecExcel" asp-route-spec="@ViewBag.Spec" target="_blank">Сохранить в формате .EXCEL</a>
+    <a class="btn btn-danger big-btn" asp-controller="Ratings" asp-action="SaveSpecPdf" asp-route-spec="@ViewBag.Spec" target="_blank">Сохранить в формате .PDF</a>
+</div>
 <table class="table ratings-table table-hover">
     <thead>
         <tr>

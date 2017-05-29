@@ -83,6 +83,7 @@ namespace NUREMarks.Controllers
         {
             int groupId = db.Students.Where(s => s.Id.Equals(id)).First().GroupId;
             ViewBag.Id = id;
+            ViewBag.Group = db.Groups.Where(g => g.Id.Equals(groupId)).First().Name;
 
             return View((from r in db.Ratings
                          join st in db.Students on r.StudentId equals st.Id
@@ -106,6 +107,7 @@ namespace NUREMarks.Controllers
             ViewBag.Id = id;
             int groupId = db.Students.Where(s => s.Id.Equals(id)).First().GroupId;
             string facShort = db.Groups.Where(gr => gr.Id.Equals(groupId)).First().FacultyShort;
+            ViewBag.Fac = facShort;
 
             return View((from r in db.Ratings
                          join st in db.Students on r.StudentId equals st.Id
@@ -129,6 +131,7 @@ namespace NUREMarks.Controllers
             ViewBag.Id = id;
             int groupId = db.Students.Where(s => s.Id.Equals(id)).First().GroupId;
             string spec = db.Groups.Where(gr => gr.Id.Equals(groupId)).First().DepShort;
+            ViewBag.Spec = spec;
 
             return View((from r in db.Ratings
                          join st in db.Students on r.StudentId equals st.Id
@@ -158,18 +161,18 @@ namespace NUREMarks.Controllers
             ViewData["SearchName"] = name;
 
             return View((from students in db.Students
-                        join ratings in db.Ratings on students.Id equals ratings.StudentId
-                        join groups in db.Groups on students.GroupId equals groups.Id
-                        where students.Name.ToLower().Contains(name.ToLower()) && ratings.SemesterId.Equals(1)
+                         join ratings in db.Ratings on students.Id equals ratings.StudentId
+                         join groups in db.Groups on students.GroupId equals groups.Id
+                         where students.Name.ToLower().Contains(name.ToLower()) && ratings.SemesterId.Equals(1)
                          orderby ratings.Value descending, ratings.Note descending, groups.Name, students.Name
-                        select new StudentData
-                        {
-                            Id = students.Id,
-                            Name = students.Name,
-                            Group = groups.Name,
-                            Rating = ratings.Value,
-                            Info = ratings.Note
-                        }).ToList());
+                         select new StudentData
+                         {
+                             Id = students.Id,
+                             Name = students.Name,
+                             Group = groups.Name,
+                             Rating = ratings.Value,
+                             Info = ratings.Note
+                         }).ToList());
         }
 
         [HttpGet]
@@ -181,11 +184,422 @@ namespace NUREMarks.Controllers
         [HttpGet]
         public IActionResult SaveSpecialityDoc(string dep, int course)
         {
-            List<StudentData> data = GetRatings(dep, course);
-            Services.DocSaver.CreateWordDoc("wwwroot/docs/Ratings.docx", data);
-            
-            return Redirect("/docs/Ratings.docx");
+            Group group = (from g in db.Groups
+                           where g.DepShort == dep && g.Course == course
+                           select g).ToList().First();
 
+            List<StudentData> data = GetRatings(dep, course);
+            string header = "ФАКУЛЬТЕТ " + group.FacultyFull.ToUpper();
+            string info = "Рейтинг студентів " + course + " курсу cпеціальності \"" + group.Department + "\"";
+            string name = Services.StringTranslator.ConvertString(dep) + (17 - course);
+            Services.DocSaver.CreateWordDoc("wwwroot/docs/" + name + ".docx", data, header, info);
+            return Redirect("/docs/" + name + ".docx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveSpecialityPdf(string dep, int course)
+        {
+            Group group = (from g in db.Groups
+                           where g.DepShort == dep && g.Course == course
+                           select g).ToList().First();
+
+            List<StudentData> data = GetRatings(dep, course);
+            string header = "ФАКУЛЬТЕТ " + group.FacultyFull.ToUpper();
+            string info = "Рейтинг студентів " + course + " курсу cпеціальності \"" + group.Department + "\"";
+            string name = Services.StringTranslator.ConvertString(dep) + (17 - course);
+            Services.DocSaver.CreatePdfReport("wwwroot/docs/" + name + ".pdf", data, header, info);
+            return Redirect("/docs/" + name + ".pdf");
+        }
+
+        [HttpGet]
+        public IActionResult SaveSpecialityExcel(string dep, int course)
+        {
+            List<StudentData> data = GetRatings(dep, course);
+            string header = "Потiк " + dep + "-" + (17 - course);
+            string name = Services.StringTranslator.ConvertString(dep) + (17 - course);
+            Services.DocSaver.CreateExcelDoc("wwwroot/docs/" + name + ".xlsx", data, header);
+            return Redirect("/docs/" + name + ".xlsx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveGroupDoc(string group)
+        {
+            Group gr = db.Groups.Where(grp => grp.Name.Equals(group)).First();
+
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.Id.Equals(gr.Id) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).ToList();
+            string header = "ГРУПА " + group;
+            string info = "Рейтинг студентів групи \"" + group + "\"";
+            string name = Services.StringTranslator.ConvertString(group);
+
+            Services.DocSaver.CreateWordDoc("wwwroot/docs/" + name + ".docx", data, header, info);
+            return Redirect("/docs/" + name + ".docx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveGroupPdf(string group)
+        {
+            Group gr = db.Groups.Where(grp => grp.Name.Equals(group)).First();
+
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.Id.Equals(gr.Id) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).ToList();
+            string header = "ГРУПА " + group;
+            string info = "Рейтинг студентів групи \"" + group + "\"";
+            string name = Services.StringTranslator.ConvertString(group);
+
+            Services.DocSaver.CreatePdfReport("wwwroot/docs/" + name + ".pdf", data, header, info);
+            return Redirect("/docs/" + name + ".pdf");
+        }
+
+        [HttpGet]
+        public IActionResult SaveGroupExcel(string group)
+        {
+            Group gr = db.Groups.Where(grp => grp.Name.Equals(group)).First();
+
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.Id.Equals(gr.Id) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).ToList();
+            string header = "ГРУПА " + group;
+            string info = "Рейтинг студентів групи \"" + group + "\"";
+            string name = Services.StringTranslator.ConvertString(group);
+
+            Services.DocSaver.CreateExcelDoc("wwwroot/docs/" + name + ".xlsx", data, header);
+            return Redirect("/docs/" + name + ".xlsx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveFacultyDoc(string fac)
+        {
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.FacultyShort.Equals(fac) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).ToList();
+            string header = "ФАКУЛЬТЕТ " + fac;
+            string info = "Рейтинг студентів факультету \"" + fac + "\"";
+            string name = Services.StringTranslator.ConvertString(fac);
+
+            Services.DocSaver.CreateWordDoc("wwwroot/docs/" + name + ".docx", data, header, info);
+            return Redirect("/docs/" + name + ".docx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveFacultyPdf(string fac)
+        {
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.FacultyShort.Equals(fac) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                         ).ToList();
+            string header = "ФАКУЛЬТЕТ " + fac;
+            string info = "Рейтинг студентів факультету \"" + fac + "\"";
+            string name = Services.StringTranslator.ConvertString(fac);
+
+            Services.DocSaver.CreatePdfReport("wwwroot/docs/" + name + ".pdf", data, header, info);
+            return Redirect("/docs/" + name + ".pdf");
+        }
+
+        [HttpGet]
+        public IActionResult SaveFacultyExcel(string fac)
+        {
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.FacultyShort.Equals(fac) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).ToList();
+            string header = "ФАКУЛЬТЕТ " + fac;
+            string info = "Рейтинг студентів факультету \"" + fac + "\"";
+            string name = Services.StringTranslator.ConvertString(fac);
+
+            Services.DocSaver.CreateExcelDoc("wwwroot/docs/" + name + ".xlsx", data, header);
+            return Redirect("/docs/" + name + ".xlsx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveSpecDoc(string spec)
+        {
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.DepShort.Equals(spec) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).ToList();
+            string header = "СПЕЦIАЛЬНIСТЬ " + spec;
+            string info = "Рейтинг студентів спецiальностi \"" + spec + "\"";
+            string name = Services.StringTranslator.ConvertString(spec);
+
+            Services.DocSaver.CreateWordDoc("wwwroot/docs/" + name + ".docx", data, header, info);
+            return Redirect("/docs/" + name + ".docx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveSpecPdf(string spec)
+        {
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.DepShort.Equals(spec) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).ToList();
+            string header = "СПЕЦIАЛЬНIСТЬ " + spec;
+            string info = "Рейтинг студентів спецiальностi \"" + spec + "\"";
+            string name = Services.StringTranslator.ConvertString(spec);
+
+            Services.DocSaver.CreatePdfReport("wwwroot/docs/" + name + ".pdf", data, header, info);
+            return Redirect("/docs/" + name + ".pdf");
+        }
+
+        [HttpGet]
+        public IActionResult SaveSpecExcel(string spec)
+        {
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where g.DepShort.Equals(spec) && r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).ToList();
+            string header = "СПЕЦIАЛЬНIСТЬ " + spec;
+            string info = "Рейтинг студентів спецiальностi \"" + spec + "\"";
+            string name = Services.StringTranslator.ConvertString(spec);
+
+            Services.DocSaver.CreateExcelDoc("wwwroot/docs/" + name + ".xlsx", data, header);
+            return Redirect("/docs/" + name + ".xlsx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveTopDoc()
+        {
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).Take(100).ToList();
+            string header = "ТОП-100";
+            string info = "Топ рейтингiв ХНУРЕ";
+            string name = "Top100";
+
+            Services.DocSaver.CreateWordDoc("wwwroot/docs/" + name + ".docx", data, header, info);
+            return Redirect("/docs/" + name + ".docx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveTopPdf()
+        {
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).Take(100).ToList();
+            string header = "ТОП-100";
+            string info = "Топ рейтингiв ХНУРЕ";
+            string name = "Top100";
+
+            Services.DocSaver.CreatePdfReport("wwwroot/docs/" + name + ".pdf", data, header, info);
+            return Redirect("/docs/" + name + ".pdf");
+        }
+
+        [HttpGet]
+        public IActionResult SaveTopExcel()
+        {
+            List<StudentData> data = (from r in db.Ratings
+                                      join st in db.Students on r.StudentId equals st.Id
+                                      join g in db.Groups on st.GroupId equals g.Id
+                                      where r.SemesterId.Equals(1)
+                                      orderby r.Value descending, r.Note descending, g.Name, st.Name
+                                      select new StudentData
+                                      {
+                                          Id = st.Id,
+                                          Name = st.Name,
+                                          Group = g.Name,
+                                          Rating = r.Value,
+                                          Info = r.Note
+                                      }
+                        ).Take(100).ToList();
+            string header = "ТОП-100";
+            string info = "Топ рейтингiв ХНУРЕ";
+            string name = "Top100";
+
+            Services.DocSaver.CreateExcelDoc("wwwroot/docs/" + name + ".xlsx", data, header);
+            return Redirect("/docs/" + name + ".xlsx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveSearchDoc(string search)
+        {
+            List<StudentData> data = (from students in db.Students
+                                      join ratings in db.Ratings on students.Id equals ratings.StudentId
+                                      join groups in db.Groups on students.GroupId equals groups.Id
+                                      where students.Name.ToLower().Contains(search.ToLower()) && ratings.SemesterId.Equals(1)
+                                      orderby ratings.Value descending, ratings.Note descending, groups.Name, students.Name
+                                      select new StudentData
+                                      {
+                                          Id = students.Id,
+                                          Name = students.Name,
+                                          Group = groups.Name,
+                                          Rating = ratings.Value,
+                                          Info = ratings.Note
+                                      }).ToList();
+
+            string header = "ПОШУК: " + search;
+            string info = "Рейтинг студентів за запитом: \"" + search + "\"";
+            string name = Services.StringTranslator.ConvertString(search);
+
+            Services.DocSaver.CreateWordDoc("wwwroot/docs/" + name + ".docx", data, header, info);
+            return Redirect("/docs/" + name + ".docx");
+        }
+
+        [HttpGet]
+        public IActionResult SaveSearchPdf(string search)
+        {
+            List<StudentData> data = (from students in db.Students
+                                      join ratings in db.Ratings on students.Id equals ratings.StudentId
+                                      join groups in db.Groups on students.GroupId equals groups.Id
+                                      where students.Name.ToLower().Contains(search.ToLower()) && ratings.SemesterId.Equals(1)
+                                      orderby ratings.Value descending, ratings.Note descending, groups.Name, students.Name
+                                      select new StudentData
+                                      {
+                                          Id = students.Id,
+                                          Name = students.Name,
+                                          Group = groups.Name,
+                                          Rating = ratings.Value,
+                                          Info = ratings.Note
+                                      }).ToList();
+
+            string header = "ПОШУК: " + search;
+            string info = "Рейтинг студентів за запитом: \"" + search + "\"";
+            string name = Services.StringTranslator.ConvertString(search);
+
+            Services.DocSaver.CreatePdfReport("wwwroot/docs/" + name + ".pdf", data, header, info);
+            return Redirect("/docs/" + name + ".pdf");
+        }
+
+        [HttpGet]
+        public IActionResult SaveSearchExcel(string search)
+        {
+            List<StudentData> data = (from students in db.Students
+                                      join ratings in db.Ratings on students.Id equals ratings.StudentId
+                                      join groups in db.Groups on students.GroupId equals groups.Id
+                                      where students.Name.ToLower().Contains(search.ToLower()) && ratings.SemesterId.Equals(1)
+                                      orderby ratings.Value descending, ratings.Note descending, groups.Name, students.Name
+                                      select new StudentData
+                                      {
+                                          Id = students.Id,
+                                          Name = students.Name,
+                                          Group = groups.Name,
+                                          Rating = ratings.Value,
+                                          Info = ratings.Note
+                                      }).ToList();
+
+            string header = "ПОШУК: " + search;
+            string info = "Рейтинг студентів за запитом: \"" + search + "\"";
+            string name = Services.StringTranslator.ConvertString(search);
+
+            Services.DocSaver.CreateExcelDoc("wwwroot/docs/" + name + ".xlsx", data, header);
+            return Redirect("/docs/" + name + ".xlsx");
         }
     }
 }

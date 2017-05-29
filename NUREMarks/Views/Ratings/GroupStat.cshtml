@@ -1,12 +1,17 @@
 ﻿@model List<StudentData>
 
 @{
-    ViewData["Title"] = "Статистика по группе";
+    ViewData["Title"] = "Статистика по группе " + @ViewBag.Group;
     int i = 1;
 
 }
 
-<h2 class="page-title">Статистика по группе</h2><br />
+<h2 class="page-title">Статистика по группе @ViewBag.Group</h2><br />
+<div>
+    <a class="btn btn-info big-btn" asp-controller="Ratings" asp-action="SaveGroupDoc" asp-route-group="@ViewBag.Group" target="_blank">Сохранить в формате .DOCX</a>
+    <a class="btn btn-success big-btn" asp-controller="Ratings" asp-action="SaveGroupExcel" asp-route-group="@ViewBag.Group" target="_blank">Сохранить в формате .EXCEL</a>
+    <a class="btn btn-danger big-btn" asp-controller="Ratings" asp-action="SaveGroupPdf" asp-route-group="@ViewBag.Group" target="_blank">Сохранить в формате .PDF</a>
+</div>
 <table class="table ratings-table table-hover">
     <thead>
         <tr>
