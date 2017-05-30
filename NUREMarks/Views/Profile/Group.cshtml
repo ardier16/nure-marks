@@ -1,10 +1,10 @@
 ﻿@model List<MarkInfo>
 
 @{
-    ViewData["Title"] = "Группы";
+    ViewData["Title"] = "Группa " + ViewBag.Group;
     int i = 1;
 }
-<h2 class="text-center">Группа</h2>
+<h2 class="text-center">Группа @ViewBag.Group</h2>
 <br />
 @if (ViewData["MarksStatus"] != null)
 {

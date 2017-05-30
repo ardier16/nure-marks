@@ -28,6 +28,7 @@
     <Content Include="wwwroot\images\main.PNG" />
     <Content Include="wwwroot\js\site.js" />
     <Content Include="wwwroot\js\site.min.js" />
+    <Content Include="wwwroot\js\timetable.js" />
     <Content Include="wwwroot\lib\bootstrap\.bower.json" />
     <Content Include="wwwroot\lib\bootstrap\bower.json" />
     <Content Include="wwwroot\lib\bootstrap\CHANGELOG.md" />

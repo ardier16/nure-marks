@@ -9,7 +9,7 @@ namespace NUREMarks.Services
         public void SendEmail(string email, string subject, string message)
         {
             // STEP 1: Navigate to this page https://www.google.com/settings/security/lesssecureapps & set to "Turn On"
-            /*
+            
             var emailMessage = new MimeMessage();
 
             emailMessage.From.Add(new MailboxAddress("NURE Marks", "nuremarks@gmail.com"));
@@ -35,7 +35,7 @@ namespace NUREMarks.Services
                 client.Send(emailMessage);
                 client.Disconnect(true);
             }
-            */
+            
         }
     }
 }

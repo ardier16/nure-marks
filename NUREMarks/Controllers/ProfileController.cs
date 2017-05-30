@@ -233,6 +233,8 @@ namespace NUREMarks.Controllers
                     ViewData["MarksStatus"] = message;
                 }
 
+                ViewBag.Group = GroupName;
+
                 string season = Semester.Split(' ')[0];
                 int year = Int32.Parse(Semester.Split(' ')[1]);
 
@@ -328,9 +330,14 @@ namespace NUREMarks.Controllers
         [HttpGet]
         public IActionResult TimeTable(string group)
         {
-            string url = "http://cist.nure.ua/ias/app/tt/P_API_EVENT_JSON?timetable_id=5259356&time_from=1493590100&time_to=1494160100";
+            string groups = GetHtml("http://cist.nure.ua/ias/app/tt/P_API_GROUP_JSON");
+            int idx = groups.IndexOf(group);
+            string id = groups.Substring(idx - 19, 10).Split(':').Last();
+
+            string url = "http://cist.nure.ua/ias/app/tt/P_API_EVENT_JSON?timetable_id=" + id + "&time_from=1486000000&time_to=1499590100";
 
             ViewBag.Text = GetHtml(url);
+            ViewBag.Group = group;
 
             return View();
         }
