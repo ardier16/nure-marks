@@ -172,19 +172,56 @@ textarea {
     height: 86px;
 }
 
+.pairs-block {
+    width: 120px;
+    height: 80px;
+    color: black;
+}
+
+.multiple {
+    display: block;
+    overflow: auto;
+    max-height: 90px;
+}
+
 .pair {
     cursor: pointer;
     font-size: 11pt;
     border-style: solid;
     border-radius: 4px;
     height: 70px;
-    width: 100%;
+    width: 100px;
     border-width: 1px;
     vertical-align: middle;
     text-align: center;
-    margin-left: 0px;
+    margin: 10px;
     padding: 10% 0%;
     font-family: sans-serif;
+}
+
+
+/* scrollbar */
+.multiple::-webkit-scrollbar,
+#timetable-block::-webkit-scrollbar {
+    height: 0.6em;
+}
+
+.multiple::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.multiple::-webkit-scrollbar-track,
+#timetable-block::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 3em;
+}
+
+.multiple::-webkit-scrollbar-thumb,
+#timetable-block::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 3em;
+    outline: 1px solid slategrey;
 }
 
 .pair > p {
@@ -234,11 +271,6 @@ textarea {
     height: 91px;
 }
 
-.pairs-block {
-    width: 120px;
-    margin: 0px 10px;
-    color: black;
-}
 
 .lastpair-td {
     background-color: rgba(152, 152, 152, 0.55);
@@ -262,15 +294,6 @@ textarea {
 
 .lastpair-td .consultation {
     background-color: #87a5aa;
-}
-
-.multiple {
-    display: block;
-    overflow: auto;
-    max-height: 90px;
-    padding-top: 10px;
-    margin-right: 0px;
-    width: 130px;
 }
 
 

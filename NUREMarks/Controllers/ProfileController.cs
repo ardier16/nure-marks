@@ -334,7 +334,7 @@ namespace NUREMarks.Controllers
             int idx = groups.IndexOf(group);
             string id = groups.Substring(idx - 19, 10).Split(':').Last();
 
-            string url = "http://cist.nure.ua/ias/app/tt/P_API_EVENT_JSON?timetable_id=" + id + "&time_from=1486000000&time_to=1499590100";
+            string url = "http://cist.nure.ua/ias/app/tt/P_API_EVENT_JSON?timetable_id=" + id;
 
             ViewBag.Text = GetHtml(url);
             ViewBag.Group = group;

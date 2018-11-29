@@ -23,14 +23,17 @@ namespace NUREMarks.Controllers
         {
             Group group = (from g in db.Groups
                            where g.DepShort == dep && g.Course == course
-                           select g).ToList().First();
+                           select g).ToList().FirstOrDefault();
 
-            ViewData["Department"] = group.Department;
-            ViewData["Faculty"] = group.FacultyFull;
-            ViewData["Course"] = group.Course;
-            ViewData["Dep"] = group.DepShort;
-            ViewData["Type"] = group.DepShort.Last() == 'у' ?
-                                "з прискореним терміном навчання" : "";
+           if (group != null)
+            {
+                ViewData["Department"] = group.Department;
+                ViewData["Faculty"] = group.FacultyFull;
+                ViewData["Course"] = group.Course;
+                ViewData["Dep"] = group.DepShort;
+                ViewData["Type"] = group.DepShort.Last() == 'у' ?
+                                    "з прискореним терміном навчання" : "";
+            }
 
             List<StudentData> data = GetRatings(dep, course);
 
@@ -520,7 +523,6 @@ namespace NUREMarks.Controllers
                                       }
                         ).Take(100).ToList();
             string header = "ТОП-100";
-            string info = "Топ рейтингiв ХНУРЕ";
             string name = "Top100";
 
             Services.DocSaver.CreateExcelDoc("wwwroot/docs/" + name + ".xlsx", data, header);

@@ -89,8 +89,8 @@ namespace NUREMarks
 
             app.UseGoogleAuthentication(new GoogleOptions()
             {
-                ClientId = Configuration["client_id"],
-                ClientSecret = Configuration["client_secret"]
+                ClientId = "734066827581-50647bucd298nn1gu7b1q50gm1enaatk.apps.googleusercontent.com",
+                ClientSecret = "wFLRUv4bpr0dBSWH1xXhrQPm"
             });
 
 

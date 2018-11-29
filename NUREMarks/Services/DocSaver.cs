@@ -365,8 +365,11 @@ namespace NUREMarks.Services
             if (bold)
                 runProperties1.Append(new DocumentFormat.OpenXml.Wordprocessing.Bold());
 
-            DocumentFormat.OpenXml.Wordprocessing.Text text1 = new DocumentFormat.OpenXml.Wordprocessing.Text();
-            text1.Text = text;
+            DocumentFormat.OpenXml.Wordprocessing.Text text1 = 
+                new DocumentFormat.OpenXml.Wordprocessing.Text
+                {
+                    Text = text
+                };
 
             run1.Append(runProperties1);
             run1.Append(text1);

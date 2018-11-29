@@ -1,192 +1,224 @@
-﻿function setTable() {
-    var date = new Date(2017, 1, 6);
-    var options = {
-      month: 'numeric',
-      day: 'numeric',
-      weekday: 'short',
-    };
-
-    var th = $("#timetable-th")[0];
-    var trs = $(".timetable-tr");
-
-    for (var i = 0; i < 150; i++) {
-        th.innerHTML += '<th class="text-center">' + date.toLocaleString("ru", options) + '</th>';
-        date.setDate(date.getDate() + 1);
-
-            trs[0].innerHTML += '<td class="text-center">&nbsp;</td>';
-
-    }
-}
-
+﻿var timetable = {};
 var isPairScroll = false;
 
-function setTimeTable() {
-
-    if ($("#htmlText")[0])
-    {
-        var date = new Date(2017, 1, 6);
-
-        var obj = JSON.parse($("#htmlText")[0].value);
-
-        var today = new Date();
-        var dt = new Date(obj.events[0].start_time * 1000);
-        dt.setHours(0);
-        dt.setMinutes(0);
-        dt.setSeconds(0);
-        var d = ~~((today.getTime() - dt.getTime()) / 1000 / 3600 / 24);
-        var scr = 141 * d;
-
-        for (var i = 0; i < obj.events.length; i++) {
-            var number = obj.events[i].number_pair;
-            var day = new Date(obj.events[i].start_time * 1000);
-            var delta = day.getTime() - date.getTime();
-            var m = ~~(delta / 1000 / 3600 / 24);
-
-            var type, typeClass, fullType, teacher, groups, name;
-
-            switch (obj.events[i].type)
-            {
-                case 0:
-                    type = "Лк";
-                    fullType = "Лекцiя";
-                    typeClass = "lecture";
-                    break;
-                case 10:
-                    type = "Пз";
-                    fullType = "Практичне заняття";
-                    typeClass = "practice";
-                    break;
-                case 21:
-                    type = "Лб";
-                    fullType = "Лабораторна IОЦ";
-                    typeClass = "laboratory";
-                    break;
-                case 53:
-                    type = "IспКо";
-                    fullType = "Iспит комбiнований";
-                    typeClass = "exam";
-                    break;
-                case 30:
-                    type = "Конс";
-                    fullType = "Консультацiя";
-                    typeClass = "consultation";
-                    break;
-            }
-
-            var subject = findSubject(obj, obj.events[i].subject_id);
-            var auditory = obj.events[i].auditory;
-            name = subject.title;
-            groups = findGroups(obj, obj.events[i].groups);
-            teacher = findTeacher(obj, obj.events[i].teachers[0]);
-
-            var tr = $(".timetable-tr")[number-1];
-            var td = tr.children[m];
-
-            td.className = "";
-
-            var modal = getPairInfoDiv(fullType, name, auditory, teacher, groups);
-
-            var pairInfo = '<div class="pair ' + typeClass + ' open_modal' +
-                '"><input type="hidden" value="#modal' + i + '"><p>' + subject.brief + '</p><p>' + type + ' ' + auditory + '</p>' +
-                '<div id="modal' + i +  '" class="modal_div ' + typeClass + '">' + modal +
-                '</div></div>';
-
-            if (td.firstChild.innerHTML !== "&nbsp;")
-            {
-                var div = td.firstChild;
-                div.className = "multiple " + div.className;
-
-                div.onmouseover = function(e) {
-                    isPairScroll = true;
-                }
-
-                div.onmouseout = function(e) {
-                    isPairScroll = false;
-                }
-
-                div.innerHTML +=  '<br />' + pairInfo;
-            }
-            else
-            {
-                td.firstChild.innerHTML = pairInfo;
-            }
-
-
-        }
-
-        $("#timetable-block").scrollLeft(scr);
-
-        var trs = $(".timetable-tr");
-
-        for (var i = 0; i < trs.length; i++) {
-            for (var j = 0; j < d; j++) {
-                trs[i].children[j].className += " lastpair-td";
-            }
-        }
-    }
-
-    showPairInfo();
-
+window.onload = function () {
+    setTimeTable();
 }
 
-function getPairInfoDiv(type, name, aud, teacher, groups) {
-    return '<span class="modal_close">X</span><p class="pair-title">' + name + '</p><hr><div class="pair-desc"><p>Тип</p><p>Аудитория</p>' +
-                '<p>Преподаватель</p><p>Группы</p></div><div class="pair-info"><p>' + type + '</p><p>' + aud +
-                '</p><p>' + teacher + '</p><p>' + groups + '</p></div>';
+function setTimeTable() {
+    timetable = JSON.parse($("#htmlText")[0].value);
+    generateTable(timetable.events[0].start_time, timetable.events[timetable.events.length - 1].start_time);
+    setPairs();
+    $("#timetable-block").scrollLeft(120 * getDaysDifference());
+    hidePastPairs(getDaysDifference());
+    showPairInfo();
+}
+
+function setPairs() {
+    var date = new Date(timetable.events[0].start_time * 1000);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+
+    for (var i = 0; i < timetable.events.length; i++) {
+        var number = timetable.events[i].number_pair;
+        var day = new Date(timetable.events[i].start_time * 1000);
+        var delta = day.getTime() - date.getTime();
+        var m = ~~(delta / 1000 / 3600 / 24);
+
+        var pair = getPair(timetable.events[i]);
+
+        var tr = $(".timetable-tr")[number - 1];
+        var td = tr.children[m];
+
+        td.className = "";
+        var modal = getPairInfoDiv(pair);
+
+        var pairInfo = '<div class="pair ' + pair.typeClass + ' open_modal' +
+            '"><input type="hidden" value="#modal' + i + '"><p>' + pair.subject.brief + '</p><p>' + pair.type + ' ' + pair.auditory + '</p>' +
+            '<div id="modal' + i + '" class="modal_div ' + pair.typeClass + '">' + modal +
+            '</div></div>';
+
+        if (td.firstChild.innerHTML !== "&nbsp;") {
+            var div = td.firstChild;
+            div.className = "multiple " + div.className;
+
+            div.onmouseover = function (e) {
+                isPairScroll = true;
+            }
+
+            div.onmouseout = function (e) {
+                isPairScroll = false;
+            }
+
+            div.innerHTML += '<br />' + pairInfo;
+        }
+        else {
+            td.firstChild.innerHTML = pairInfo;
+        }
+    }
+}
+
+function getPair(event) {
+    var pair = {};
+    getPairType(event.type, pair);
+    pair.teacher = findTeacher(event.teachers[0]);
+    pair.subject = findSubject(event.subject_id);
+    pair.auditory = event.auditory;
+    pair.name = pair.subject.title;
+    pair.groups = findGroups(event.groups);
+
+    return pair;
+}
+
+function getPairType(typeId, pair) {
+    switch (typeId) {
+        case 0:
+            pair.type = "Лк";
+            pair.fullType = "Лекцiя";
+            pair.typeClass = "lecture";
+            return;
+        case 10:
+            pair.type = "Пз";
+            pair.fullType = "Практичне заняття";
+            pair.typeClass = "practice";
+            return;
+        case 21:
+        case 22:
+            pair.type = "Лб";
+            pair.fullType = "Лабораторна IОЦ";
+            pair.typeClass = "laboratory";
+            return;
+        case 53:
+            pair.type = "Iспит";
+            pair.fullType = "Iспит комбiнований";
+            pair.typeClass = "exam";
+            return;
+        case 30:
+            pair.type = "Конс";
+            pair.fullType = "Консультацiя";
+            pair.typeClass = "consultation";
+            return;
+        case 40:
+            pair.type = "Зал";
+            pair.fullType = "Залік";
+            pair.typeClass = "exam";
+            return;
+    }
+}
+
+function getDaysDifference() {
+    var today = new Date();
+    var dt = new Date(timetable.events[0].start_time * 1000);
+    dt.setHours(0);
+    dt.setMinutes(0);
+    dt.setSeconds(0);
+
+    return ~~((today.getTime() - dt.getTime()) / 1000 / 3600 / 24);
+}
+
+function hidePastPairs(days) {
+
+    var trs = $(".timetable-tr");
+
+    for (var i = 0; i < trs.length; i++) {
+        for (var j = 0; j < trs[i].cells.length && j < days; j++) {
+            trs[i].children[j].className += " lastpair-td";
+        }
+    }
+}
+
+function generateTable(startDate, endDate) {
+    var th = '';
+    var td = '';
+
+    var date = new Date(startDate * 1000);
+
+    date.setHours(7);
+    date.setMinutes(0);
+    date.setSeconds(0);
+
+    startDate = date.getTime() / 1000;
+
+    var current = new Date();
+
+    if (current.getTime() > endDate * 1000) {
+        endDate = (current.getTime() / 1000) + 6 * 24 * 3600;
+    }
+
+    while (startDate < endDate) {
+        th += '<th class="text-center">' + new Date(startDate * 1000).toLocaleDateString() + '</th>';
+        td += '<td class="text-center"><div class="pairs-block">&nbsp;</div></td>';
+        startDate += 3600 * 24;
+    }
+
+    document.getElementById("timetable-th").innerHTML = th;
+    var tds = document.getElementsByClassName("timetable-tr");
+
+    for (let i = 0; i < tds.length; i++) {
+        tds[i].innerHTML = td;
+    }
+}
+
+function getPairInfoDiv(pair) {
+    return '<span class="modal_close">X</span><p class="pair-title">' + pair.name + '</p><hr><div class="pair-desc"><p>Тип</p><p>Аудитория</p>' +
+        '<p>Преподаватель</p><p>Группы</p></div><div class="pair-info"><p>' + pair.fullType + '</p><p>' + pair.auditory +
+        '</p><p>' + pair.teacher + '</p><p>' + pair.groups + '</p></div>';
 }
 
 function showPairInfo() {
-    var overlay = $('#overlay'); // пoдлoжкa, дoлжнa быть oднa нa стрaнице
-    var open_modal = $('.open_modal'); // все ссылки, кoтoрые будут oткрывaть oкнa
-    var close = $('.modal_close, #overlay'); // все, чтo зaкрывaет мoдaльнoе oкнo, т.е. крестик и oверлэй-пoдлoжкa
-    var modal = $('.modal_div'); // все скрытые мoдaльные oкнa
+    var overlay = $('#overlay');
+    var open_modal = $('.open_modal');
+    var close = $('.modal_close, #overlay');
+    var modal = $('.modal_div');
 
-     open_modal.click( function(event){ // лoвим клик пo ссылке с клaссoм open_modal
-         event.preventDefault(); // вырубaем стaндaртнoе пoведение
-         var div = $(this)[0].children[0].value; // вoзьмем стрoку с селектoрoм у кликнутoй ссылки
-         overlay.fadeIn(400, //пoкaзывaем oверлэй
-             function(){ // пoсле oкoнчaния пoкaзывaния oверлэя
-                 $(div) // берем стрoку с селектoрoм и делaем из нее jquery oбъект
-                     .css('display', 'block')
-                     .animate({opacity: 1, top: '50%'}, 200); // плaвнo пoкaзывaем
-         });
-     });
+    open_modal.click(function (event) {
+        event.preventDefault();
+        var div = $(this)[0].children[0].value;
+        overlay.fadeIn(400,
+            function () {
+                $(div)
+                    .css('display', 'block')
+                    .animate({ opacity: 1, top: '50%' }, 200);
+            });
+    });
 
-     close.click( function(){ // лoвим клик пo крестику или oверлэю
-            modal // все мoдaльные oкнa
-             .animate({opacity: 0, top: '45%'}, 200, // плaвнo прячем
-                 function(){ // пoсле этoгo
-                     $(this).css('display', 'none');
-                     overlay.fadeOut(400); // прячем пoдлoжку
-                 }
-             );
-     });
+    close.click(function () {
+        modal
+            .animate({ opacity: 0, top: '45%' }, 200,
+            function () {
+                $(this).css('display', 'none');
+                overlay.fadeOut(400);
+            }
+            );
+    });
 }
 
-function findSubject(json, id) {
-    for (var i = 0; i < json.subjects.length; i++) {
-        if (json.subjects[i].id === id)
-            return json.subjects[i];
+function findSubject(id) {
+    for (var i = 0; i < timetable.subjects.length; i++) {
+        if (timetable.subjects[i].id === id) {
+            return timetable.subjects[i];
+        }
     }
 }
 
-function findTeacher(json, id) {
-    for (var i = 0; i < json.teachers.length; i++) {
-        if (json.teachers[i].id === id)
-            return json.teachers[i].full_name;
+function findTeacher(id) {
+    for (var i = 0; i < timetable.teachers.length; i++) {
+        if (timetable.teachers[i].id === id)
+            return timetable.teachers[i].full_name;
     }
 
     return "-";
 }
 
-function findGroups(json, idxs) {
+function findGroups(idxs) {
     var res = "";
     var c = 0;
 
     for (var j = 0; j < idxs.length; j++) {
-        for (var i = 0; i < json.subjects.length; i++) {
-            if (json.groups[i].id === idxs[j]) {
-                res += json.groups[i].name + "; ";
+        for (var i = 0; i < timetable.groups.length; i++) {
+            if (timetable.groups[i].id === idxs[j]) {
+                res += timetable.groups[i].name + "; ";
                 c++;
             }
 
@@ -197,20 +229,18 @@ function findGroups(json, idxs) {
         }
     }
 
-    return res.substr(0, res.length-2);
+    return res.substr(0, res.length - 2);
 }
 
-document.ready = function () {
-    //setTable();
-    setTimeTable();
-}
-
-$("#timetable-block")[0].onwheel = function(e) {
+$("#timetable-block")[0].onwheel = function (e) {
     if (!isPairScroll) {
         var x = $("#timetable-block").scrollLeft();
         if (e.deltaY > 0)
-            $("#timetable-block").animate({scrollLeft: x + 282}, 200);
+            $("#timetable-block").animate({ scrollLeft: x + 282 }, 50);
         else
-            $("#timetable-block").animate({scrollLeft: x - 282}, 200);
+            $("#timetable-block").animate({ scrollLeft: x - 282 }, 50);
+
+        e.preventDefault();
+
     }
 }
